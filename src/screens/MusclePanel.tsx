@@ -44,13 +44,14 @@ export function MusclePanel({ ex }: { ex: Exercise }) {
         </>
       )}
 
-      <div className="chips">
+      <span className="small muted">{t.trains}</span>
+      <ul className="mtags">
         {listed.map(([m, w]) => (
-          <span key={m} className={`chip${w === 1 ? ' on' : ''}`} style={{ textTransform: 'none', letterSpacing: 0, fontSize: 14, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            {SUB_LABELS[lang][m]} <b className="cond">{mark(w)}</b>
-          </span>
+          <li key={m} className={w === 1 ? 'full' : 'half'}>
+            <span>{SUB_LABELS[lang][m]}</span><b>{w === 1 ? t.direct : `½ · ${t.indirect}`}</b>
+          </li>
         ))}
-      </div>
+      </ul>
 
       {own ? <span className="small accent">{t.ownMapping}</span> : v ? (
         <>

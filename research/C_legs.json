@@ -1,0 +1,399 @@
+{
+ "exercises": [
+  {
+   "nameEn": "Leg Press (machine)",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Beinpresse",
+     "labelEn": "Leg Press",
+     "targets": {
+      "quads": 1,
+      "glutes": 0.5,
+      "adductors": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Trainiert vor allem die Vasti (äußerer, innerer und mittlerer Oberschenkelstrecker). Der Rectus femoris wächst kaum, weil er bei gleichzeitiger Hüftstreckung wenig aktiv ist. Gesäß und Adduktoren helfen bei der Hüftstreckung mit (abgeleitet aus Kniebeugen-Daten, nicht direkt gemessen).",
+     "sourceIds": [
+      "s4",
+      "s5",
+      "s6",
+      "s1"
+     ]
+    }
+   ],
+   "myths": [
+    "Mythos 'Beinpresse trainiert den ganzen Quadrizeps': In einer MRT-Studie wuchs der Rectus femoris mit Beinpresse nur ca. 1 %, mit Beinstrecker ca. 13 %.",
+    "Mythos 'Füße hoch = Gesäß': Belegt ist nur etwas mehr EMG-Aktivität des Gesäßes bei hoher Fußposition (80 % 1RM). Ein systematischer Review nennt die Datenlage unklar; Hypertrophie-Daten gibt es nicht."
+   ]
+  },
+  {
+   "nameEn": "Leg Extension (machine)",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Beinstrecker",
+     "labelEn": "Leg Extension",
+     "targets": {
+      "quads": 1,
+      "rectus_femoris": 1
+     },
+     "basis": "hypertrophy",
+     "summaryDe": "Die beste Übung für den Rectus femoris, der bei Beinpresse und Kniebeuge kaum wächst; die Vasti wachsen genauso gut wie bei der Beinpresse. Rückenlehne flacher stellen (Hüfte weniger gebeugt) steigert das Wachstum des Rectus femoris zusätzlich.",
+     "sourceIds": [
+      "s4",
+      "s7",
+      "s8"
+     ]
+    }
+   ],
+   "myths": [
+    "Mythos 'Isolationsübungen sind fürs Muskelwachstum überflüssig': Für den Rectus femoris ist der Beinstrecker laut MRT-Daten praktisch unverzichtbar."
+   ]
+  },
+  {
+   "nameEn": "Leg Curl (machine)",
+   "variants": [
+    {
+     "key": "seated",
+     "labelDe": "Beinbeuger sitzend",
+     "labelEn": "Seated Leg Curl",
+     "targets": {
+      "hamstrings": 1
+     },
+     "basis": "hypertrophy",
+     "summaryDe": "Trainiert die hintere Oberschenkelmuskulatur direkt. Sitzend sind die zweigelenkigen Beinbeuger durch die gebeugte Hüfte stärker gedehnt; deshalb wuchsen sie hier deutlich mehr als im Liegen (ca. 14 % vs. 9 %).",
+     "sourceIds": [
+      "s3"
+     ]
+    },
+    {
+     "key": "lying",
+     "labelDe": "Beinbeuger liegend",
+     "labelEn": "Lying Leg Curl",
+     "targets": {
+      "hamstrings": 1
+     },
+     "basis": "hypertrophy",
+     "summaryDe": "Trainiert die hintere Oberschenkelmuskulatur direkt, aber in kürzerer Muskellänge als sitzend. Wachstum ist klar vorhanden, aber geringer als bei der sitzenden Variante.",
+     "sourceIds": [
+      "s3"
+     ]
+    }
+   ],
+   "myths": [
+    "Liegend und sitzend sind nicht gleichwertig: Sitzend brachte in einer 12-Wochen-MRT-Studie mehr Wachstum der zweigelenkigen Beinbeuger."
+   ]
+  },
+  {
+   "nameEn": "Barbell Squat (full depth)",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Kniebeuge (tief)",
+     "labelEn": "Barbell Squat (full depth)",
+     "targets": {
+      "quads": 1,
+      "glutes": 1,
+      "adductors": 1,
+      "erectors": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Tiefe Kniebeugen lassen Vasti, Gesäß und Adduktoren wachsen; tiefe Ausführung bringt deutlich mehr fürs Gesäß und die Adduktoren als halbe. Beinbeuger und Rectus femoris wachsen dabei praktisch nicht; der untere Rücken arbeitet stabilisierend mit (biomechanisch abgeleitet).",
+     "sourceIds": [
+      "s1",
+      "s2",
+      "s9"
+     ]
+    }
+   ],
+   "myths": [
+    "Mythos 'Kniebeugen trainieren die Beinbeuger': In MRT-Studien wuchsen die Hamstrings durch Kniebeugen nicht.",
+    "Mythos 'Kniebeugen trainieren den ganzen Quadrizeps': Der Rectus femoris wuchs in mehreren Studien nicht.",
+    "Unterschätzt: Die Adduktoren wachsen durch tiefe Kniebeugen stark mit."
+   ]
+  },
+  {
+   "nameEn": "Dumbbell Lunges",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Ausfallschritte mit Kurzhanteln",
+     "labelEn": "Dumbbell Lunges",
+     "targets": {
+      "quads": 1,
+      "glutes": 1,
+      "adductors": 0.5,
+      "forearm_flex": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Trainiert Oberschenkelstrecker und Gesäß; ein langer Schritt erhöht die Aktivität von Gesäß, Beinbeugern und Adduktoren. Direkte Studien zum Muskelwachstum fehlen; die Zuordnung stützt sich auf EMG und die Ähnlichkeit zur Kniebeuge. Die Hanteln fordern den Griff.",
+     "sourceIds": [
+      "s10",
+      "s1"
+     ]
+    }
+   ],
+   "myths": []
+  },
+  {
+   "nameEn": "Calf Raise (machine)",
+   "variants": [
+    {
+     "key": "standing",
+     "labelDe": "Wadenheben stehend (Knie gestreckt)",
+     "labelEn": "Standing Calf Raise (straight knee)",
+     "targets": {
+      "calves": 1
+     },
+     "basis": "hypertrophy",
+     "summaryDe": "Mit gestrecktem Knie wächst vor allem der Gastrocnemius (ca. 9–12 %), der Soleus nur wenig. Besonders der untere, gedehnte Bewegungsteil (Ferse tief) ist wirksam.",
+     "sourceIds": [
+      "s11",
+      "s13"
+     ]
+    },
+    {
+     "key": "seated",
+     "labelDe": "Wadenheben sitzend (Knie gebeugt)",
+     "labelEn": "Seated Calf Raise (bent knee)",
+     "targets": {
+      "calves": 1
+     },
+     "basis": "hypertrophy",
+     "summaryDe": "Mit gebeugtem Knie ist der Gastrocnemius erschlafft und wächst kaum; Ziel ist der Soleus. In der einzigen MRT-Studie wuchs aber auch der Soleus sitzend nicht stärker als stehend (ca. 3 % vs. 2 %), das Gesamtwachstum war gering.",
+     "sourceIds": [
+      "s11"
+     ]
+    }
+   ],
+   "myths": [
+    "Mythos 'Sitzend gezielt den Soleus aufbauen': Sitzend wuchs der Soleus nicht mehr als stehend, und die Wade insgesamt wuchs weniger. Stehendes Wadenheben ist die effektivere Hauptübung."
+   ]
+  },
+  {
+   "nameEn": "Romanian Deadlift",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Rumänisches Kreuzheben",
+     "labelEn": "Romanian Deadlift",
+     "targets": {
+      "hamstrings": 1,
+      "glutes": 0.5,
+      "adductors": 0.5,
+      "erectors": 0.5,
+      "forearm_flex": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Hauptsächlich Beinbeuger über die Hüftstreckung: Die EMG-Aktivität ist hier so hoch wie bei kaum einer anderen Übung, und Hüftstreck-Training ließ den langen Bizepskopf wachsen. Gesäß, Adduktoren, unterer Rücken und Griff arbeiten mit; für das Gesäß gibt es keine direkten Wachstumsdaten.",
+     "sourceIds": [
+      "s14",
+      "s15",
+      "s16"
+     ]
+    }
+   ],
+   "myths": [
+    "Hüftstreck-Übungen wie RDL und Beinbeuger-Maschine ergänzen sich: Sie belasten die Beinbeuger-Köpfe unterschiedlich (Hüftstreckung eher langer Bizepskopf)."
+   ]
+  },
+  {
+   "nameEn": "Crunches",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Crunches",
+     "labelEn": "Crunches",
+     "targets": {
+      "abs": 1,
+      "obliques": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Trainiert den geraden Bauchmuskel; im Ultraschall verkürzte und verdickte er sich beim Crunch stärker als beim Beinheben. Die schrägen Bauchmuskeln helfen mit. Langzeitstudien zum Wachstum durch Crunches fehlen.",
+     "sourceIds": [
+      "s17",
+      "s18",
+      "s19"
+     ]
+    }
+   ],
+   "myths": [
+    "Nicht jede 'Core'-Übung lässt den Bauch wachsen: In einer Studie nahm der gerade Bauchmuskel nur mit einem schwereren Rollgerät-Training zu, nicht mit Körpergewichts-Übungen."
+   ]
+  },
+  {
+   "nameEn": "Hanging Leg Raise",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Hängendes Beinheben",
+     "labelEn": "Hanging Leg Raise",
+     "targets": {
+      "abs": 1,
+      "obliques": 0.5,
+      "rectus_femoris": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Hängendes Knie-/Beinheben gehörte zu den Übungen mit der höchsten Aktivität des geraden und der schrägen Bauchmuskeln. Die Hüftbeuger (inkl. Rectus femoris) heben die Beine mit; Becken bewusst einrollen, damit der Bauch arbeitet.",
+     "sourceIds": [
+      "s17",
+      "s18"
+     ]
+    }
+   ],
+   "myths": [
+    "Mythos 'Beinheben trainiert nur die Hüftbeuger': Im EMG war der Bauch beim hängenden Knieheben sehr aktiv.",
+    "'Untere Bauchmuskeln': Leichte Unterschiede zwischen oberen und unteren Abschnitten gibt es, aber gemessen wurde das nur in einer Einheit (akut), nicht als Wachstum."
+   ]
+  },
+  {
+   "nameEn": "Ab Crunch Machine",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Bauchmaschine (Crunch)",
+     "labelEn": "Ab Crunch Machine",
+     "targets": {
+      "abs": 1,
+      "obliques": 0.5
+     },
+     "basis": "biomech",
+     "summaryDe": "Ein Crunch mit Zusatzgewicht: Ziel ist der gerade Bauchmuskel, die Schrägen helfen. Eigene Studien zu dieser Maschine wurden nicht gefunden; die Zuordnung leitet sich vom Crunch ab. Viele Modelle lassen die Hüftbeuger mitziehen, also auf das Einrollen der Wirbelsäule achten.",
+     "sourceIds": [
+      "s18"
+     ]
+    }
+   ],
+   "myths": []
+  }
+ ],
+ "sources": [
+  {
+   "id": "s1",
+   "cite": "Kubo K et al. (2019) Effects of squat training with different depths on lower limb muscle volumes. European Journal of Applied Physiology 119:1933-1942.",
+   "url": "https://link.springer.com/doi/10.1007/s00421-019-04181-y",
+   "type": "hypertrophy-MRI",
+   "finding": "Full and half squats grew knee extensors (~5%), full squats grew gluteus maximus (6.7%) and adductors (6.2%) more than half squats, while rectus femoris and hamstrings did not change."
+  },
+  {
+   "id": "s2",
+   "cite": "Earp JE et al. (2015) Inhomogeneous quadriceps femoris hypertrophy in response to strength and power training. Medicine and Science in Sports and Exercise 47(11):2389-2397.",
+   "url": "https://ro.ecu.edu.au/ecuworkspost2013/1021",
+   "type": "hypertrophy-MRI",
+   "finding": "After 8 weeks of heavy or jump squats the vasti grew regionally, but no hypertrophy was observed in rectus femoris at any location."
+  },
+  {
+   "id": "s3",
+   "cite": "Maeo S et al. (2021) Greater hamstrings muscle hypertrophy but similar damage protection after training at long versus short muscle lengths. Medicine and Science in Sports and Exercise 53(4):825-837.",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7969179/",
+   "type": "hypertrophy-MRI",
+   "finding": "12 weeks seated vs prone leg curl: whole hamstrings +14.1% vs +9.3%, with greater growth in biarticular heads (BFlh, ST, SM) but not in BF short head."
+  },
+  {
+   "id": "s4",
+   "cite": "Kinoshita M et al. (2026) Hypertrophic effects of single- versus multi-joint exercise: a direct comparison between knee extension and leg press. Medicine and Science in Sports and Exercise (ahead of print), doi:10.1249/MSS.0000000000003957.",
+   "url": "https://www.fisiologiadelejercicio.com/wp-content/uploads/2026/02/hypertrophic_effects_of_single__versus_multi_joint.1002-1.pdf",
+   "type": "hypertrophy-MRI",
+   "finding": "12-week within-subject study: rectus femoris grew +13.2% with knee extension vs +1.1% (n.s.) with leg press, while all vasti grew similarly (~4-7%) with both."
+  },
+  {
+   "id": "s5",
+   "cite": "Ema R et al. (2016) Unique activation of the quadriceps femoris during single- and multi-joint exercises. European Journal of Applied Physiology 116(5).",
+   "url": "https://www.springermedicine.com/unique-activation-of-the-quadriceps-femoris-during-single-and-mu/21072252",
+   "type": "EMG",
+   "finding": "Rectus femoris activation was higher in knee extension than leg press and fell when hip extension torque was added, whereas vasti activation did not differ."
+  },
+  {
+   "id": "s6",
+   "cite": "Martin-Fuentes I et al. (2020) Evaluation of the lower limb muscles' electromyographic activity during the leg press exercise and its variants: a systematic review. International Journal of Environmental Research and Public Health 17(13):4626.",
+   "url": "https://www.mdpi.com/1660-4601/17/13/4626",
+   "type": "review",
+   "finding": "Evidence on foot position is inconclusive: Escamilla 2001 found no effect on thigh muscles, Da Silva 2008 found more gluteus maximus EMG with high feet only at 80% 1RM; authors recommend self-selected foot position."
+  },
+  {
+   "id": "s7",
+   "cite": "Larsen S et al. (2024) The effects of hip flexion angle on quadriceps femoris muscle hypertrophy in the leg extension exercise. Journal of Sports Sciences 43(2):210-221.",
+   "url": "https://pure.solent.ac.uk/en/publications/the-effects-of-hip-flexion-angle-on-quadriceps-femoris-muscle-hyp/",
+   "type": "hypertrophy-US",
+   "finding": "Leg extension at 40 deg hip flexion (reclined) produced greater rectus femoris hypertrophy than at 90 deg, with no difference for vastus lateralis."
+  },
+  {
+   "id": "s8",
+   "cite": "Ema R et al. (2013) Inhomogeneous architectural changes of the quadriceps femoris induced by resistance training. European Journal of Applied Physiology 113:2691-2703.",
+   "url": "https://link.springer.com/doi/10.1007/s00421-013-2700-1",
+   "type": "hypertrophy-MRI",
+   "finding": "After knee extension training, relative increase in rectus femoris cross-sectional area was significantly greater than in the vasti."
+  },
+  {
+   "id": "s9",
+   "cite": "Plotkin DL et al. (2023) Hip thrust and back squat training elicit similar gluteus muscle hypertrophy and transfer similarly to the deadlift. Frontiers in Physiology 14.",
+   "url": "https://public-pages-files-2025.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1279170/text",
+   "type": "hypertrophy-MRI",
+   "finding": "9 weeks of back squats grew gluteus maximus similarly to hip thrusts and grew quadriceps and adductors more, while hamstrings showed little to no growth."
+  },
+  {
+   "id": "s10",
+   "cite": "Escamilla RF et al. (2025) Effects of step length and stride variation during forward lunges on lower-extremity muscle activity. Journal of Functional Morphology and Kinesiology 10(1):42.",
+   "url": "https://mdpi.com/2411-5142/10/1/42",
+   "type": "EMG",
+   "finding": "Loaded forward lunges produced high to very high quadriceps and gluteus maximus/medius EMG; a long step increased gluteus maximus, hamstring and adductor activity."
+  },
+  {
+   "id": "s11",
+   "cite": "Kinoshita M et al. (2023) Triceps surae muscle hypertrophy is greater after standing versus seated calf-raise training. Frontiers in Physiology 14:1272106.",
+   "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2023.1272106/full",
+   "type": "hypertrophy-MRI",
+   "finding": "12 weeks standing vs seated calf raises: gastrocnemius grew 9-12% vs ~1% (n.s.), soleus 2.1% vs 2.9% (no difference), whole triceps surae 5.6% vs 2.1%."
+  },
+  {
+   "id": "s13",
+   "cite": "Kassiano W et al. (2023) Greater gastrocnemius muscle hypertrophy after partial range of motion training performed at long muscle lengths. Journal of Strength and Conditioning Research.",
+   "url": "https://read.qxmd.com/read/37015016/greater-gastrocnemius-muscle-hypertrophy-after-partial-range-of-motion-training-performed-at-long-muscle-lengths",
+   "type": "hypertrophy-US",
+   "finding": "Calf raises in the stretched (initial) half of the ROM grew medial gastrocnemius ~15% vs ~7% full ROM and ~3% final ROM."
+  },
+  {
+   "id": "s14",
+   "cite": "McAllister MJ et al. (2014) Muscle activation during various hamstring exercises. Journal of Strength and Conditioning Research 28(6):1573-1580.",
+   "url": "https://www.unboundmedicine.com/medline/citation/24149748/Muscle_activation_during_various_hamstring_exercises_",
+   "type": "EMG",
+   "finding": "Among leg curl, good morning, glute-ham raise and RDL at 85% 1RM, hamstring activity was maximized in the RDL and glute-ham raise."
+  },
+  {
+   "id": "s15",
+   "cite": "Bourne MN et al. (2017) Impact of the Nordic hamstring and hip extension exercises on hamstring architecture and morphology: implications for injury prevention. British Journal of Sports Medicine 51(5):469.",
+   "url": "https://bjsm.bmj.com/content/51/5/469",
+   "type": "hypertrophy-MRI",
+   "finding": "10 weeks of hip-extension training increased biceps femoris long head volume more than Nordic curls, and both increased semitendinosus volume (hip extension exercise was not an RDL)."
+  },
+  {
+   "id": "s16",
+   "cite": "Frouin A et al. (2024) Individual distribution of muscle hypertrophy among hamstring muscle heads: adding muscle volume where you need is not so simple. Scandinavian Journal of Medicine and Science in Sports 34(3):e14608.",
+   "url": "https://openrepository.aut.ac.nz/items/2084287e-0377-46ba-9424-f8bb6a21c370/full",
+   "type": "hypertrophy-US",
+   "finding": "9 weeks of seated leg curls plus stiff-leg deadlifts grew hamstring heads with large individual variation; the deadlift's own contribution cannot be isolated."
+  },
+  {
+   "id": "s17",
+   "cite": "Escamilla RF et al. (2006) Electromyographic analysis of traditional and nontraditional abdominal exercises: implications for rehabilitation and training. Physical Therapy 86(5):656-671.",
+   "url": "https://scholars.csus.edu/esploro/outputs/journalArticle/Electromyographic-Analysis-of-Traditional-and-Nontraditional/99257847129401671",
+   "type": "EMG",
+   "finding": "Hanging knee-up with straps was among the exercises with the highest upper/lower rectus abdominis and external/internal oblique activity."
+  },
+  {
+   "id": "s18",
+   "cite": "Gomirato AP et al. (2023) Diagnostic ultrasound shows preferential activation of rectus abdominis segments with exercises targeting upper versus lower segments. International Journal of Exercise Science 16(1):1077-1086.",
+   "url": "https://digitalcommons.wku.edu/ijes/vol16/iss1/10",
+   "type": "EMG",
+   "finding": "Acute ultrasound/EMG: rectus abdominis thickening was ~36% greater during a crunch than a leg raise, with recruitment biased toward the segment closest to the moving load."
+  },
+  {
+   "id": "s19",
+   "cite": "Takai Y et al. (2017) Effect of core training on trunk flexor musculature in male soccer players. Sports Medicine International Open 1:E147-E154.",
+   "url": "https://www.thieme-connect.com/products/ejournals/pdf/10.1055/s-0043-115377.pdf",
+   "type": "hypertrophy-US",
+   "finding": "10 weeks of wheeled-platform (ab roller) training increased rectus abdominis thickness, whereas bodyweight core exercises did not."
+  }
+ ]
+}

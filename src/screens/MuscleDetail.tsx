@@ -83,7 +83,9 @@ export function MuscleDetail({ d }: { d: Data }) {
           <div className="kpis">
             <div><b>{fmt(split(open).direct)}</b><span>{t.direct}</span></div>
             <div><b>{fmt(split(open).indirect)}</b><span>{t.indirect}{weighted ? ' (½)' : ''}</span></div>
-            <div><b>{fmt((split(open).total / periodDays(period)) * 7)}</b><span>Ø {t.perWeek}</span></div>
+            {period === 'month' || period === '30d'
+              ? <div><b>{fmt((split(open).total / periodDays(period)) * 7)}</b><span>Ø {t.perWeek}</span></div>
+              : <div><b>{fmt(split(open).total)}</b><span>{t.sets}</span></div>}
           </div>
           <span className="eyebrow">{t.whereFrom}</span>
           <div className="list">

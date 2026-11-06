@@ -18,6 +18,12 @@ def slug(s):
 # USER_VARIANTS lives in its own small file so it survives regeneration
 user_variants = json.loads(pathlib.Path(__file__).with_name('user-variants.json').read_text())
 
+# research names that differ slightly from the app's English names
+ALIASES = {'barbell_bench_press': 'bench_press', 'barbell_squat_full_depth': 'barbell_squat', 'calf_raise_machine': 'calf_raise',
+           'incline_barbell_bench_press': 'incline_bench_press', 'leg_curl_machine': 'leg_curl', 'leg_extension_machine': 'leg_extension',
+           'leg_press_machine': 'leg_press', 'machine_chest_press': 'chest_press', 'machine_shoulder_press': 'shoulder_press_machine',
+           'overhead_dumbbell_triceps_extension': 'overhead_dumbbell_extension', 'seated_row_machine': 'seated_row'}
+
 evidence, sources, problems = {}, {}, []
 for path in sys.argv[1:]:
     data = json.loads(pathlib.Path(path).read_text())
@@ -25,7 +31,7 @@ for path in sys.argv[1:]:
     for s in data['sources']:
         sources[f"{prefix}_{s['id']}"] = {k: s.get(k, '') for k in ('cite', 'url', 'type', 'finding')}
     for ex in data['exercises']:
-        key = slug(ex['nameEn'])
+        key = ALIASES.get(slug(ex['nameEn']), slug(ex['nameEn']))
         variants = []
         for v in ex['variants']:
             t = {}

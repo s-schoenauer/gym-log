@@ -181,3 +181,9 @@ details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 details > summary::before { content: '▸ '; }
 details[open] > summary::before { content: '▾ '; }
+.mtags { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.mtags li { display: flex; justify-content: space-between; gap: 12px; align-items: center; min-height: 36px; border-bottom: 1px solid var(--line); font-size: 15px; }
+.mtags li b { font-family: var(--cond); font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; flex: none; }
+.mtags li.full span { color: var(--text); font-weight: 600; }
+.mtags li.full b { color: var(--text); }
+.mtags li.half span, .mtags li.half b { color: var(--muted); }

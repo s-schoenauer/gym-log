@@ -1,0 +1,624 @@
+{
+ "exercises": [
+  {
+   "nameEn": "Pull-ups",
+   "variants": [
+    {
+     "key": "pronated_wide",
+     "labelDe": "Klimmzug, Obergriff breit",
+     "labelEn": "Pull-up, wide pronated",
+     "targets": {
+      "lats": 1,
+      "upper_back": 0.5,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5,
+      "brachioradialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Hauptmuskel ist der Latissimus; mittlerer/unterer Trapez, hintere Schulter und Armbeuger helfen deutlich mit. Breiter Griff aktiviert den Lat in Studien nicht stärker als mittlerer Griff.",
+     "sourceIds": [
+      "s1",
+      "s3",
+      "s4",
+      "s15",
+      "s12"
+     ]
+    },
+    {
+     "key": "pronated_shoulder",
+     "labelDe": "Klimmzug, Obergriff schulterbreit",
+     "labelEn": "Pull-up, shoulder-width pronated",
+     "targets": {
+      "lats": 1,
+      "upper_back": 0.5,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5,
+      "brachioradialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Gleiche Muskeln wie beim breiten Klimmzug: Griffbreiten zwischen 1- und 2-facher Schulterbreite ergeben im EMG eine ähnliche Lat-Aktivität.",
+     "sourceIds": [
+      "s1",
+      "s3",
+      "s4",
+      "s12"
+     ]
+    },
+    {
+     "key": "supinated",
+     "labelDe": "Klimmzug, Untergriff (Chin-up)",
+     "labelEn": "Chin-up, supinated",
+     "targets": {
+      "lats": 1,
+      "upper_back": 0.5,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Der Lat bleibt Hauptmuskel. Bizeps (und Brustmuskel) sind im EMG aktiver als beim Obergriff, der untere Trapez etwas weniger – eine echte Bizepsübung wird es dadurch nicht.",
+     "sourceIds": [
+      "s3",
+      "s4",
+      "s12"
+     ]
+    },
+    {
+     "key": "neutral",
+     "labelDe": "Klimmzug, Neutralgriff (Hammergriff)",
+     "labelEn": "Pull-up, neutral grip",
+     "targets": {
+      "lats": 1,
+      "upper_back": 0.5,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Muskelaktivität ähnlich wie bei anderen Griffen; nur der mittlere Trapez war im Obergriff deutlich aktiver als im Neutralgriff.",
+     "sourceIds": [
+      "s4",
+      "s12"
+     ]
+    }
+   ],
+   "myths": [
+    "„Breiter Griff = breiterer Rücken“: Für diese Behauptung gibt es keine Belege. Im EMG ist die Lat-Aktivität bei 1- bis 2-facher Schulterbreite ähnlich, Hypertrophie-Studien zur Griffbreite fehlen.",
+    "„Chin-ups sind eine Bizepsübung“: Der Bizeps ist zwar aktiver als beim Obergriff, aber der Latissimus bleibt der Hauptmuskel."
+   ]
+  },
+  {
+   "nameEn": "Lat Pulldown",
+   "variants": [
+    {
+     "key": "wide_pronated",
+     "labelDe": "Latzug, breit, Obergriff (vor dem Kopf)",
+     "labelEn": "Lat pulldown, wide pronated (front)",
+     "targets": {
+      "lats": 1,
+      "upper_back": 0.5,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5,
+      "brachioradialis": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Trainiert vor allem den Latissimus, dazu mittleren Rücken, hintere Schulter und Armbeuger. In einer Studie wuchsen die Armbeuger durch Latzug bei Anfängern ähnlich stark wie durch Langhantel-Curls.",
+     "sourceIds": [
+      "s1",
+      "s2",
+      "s5",
+      "s7",
+      "s6",
+      "s12"
+     ]
+    },
+    {
+     "key": "close_neutral",
+     "labelDe": "Latzug, eng / Neutralgriff (V-Griff)",
+     "labelEn": "Lat pulldown, close / neutral grip",
+     "targets": {
+      "lats": 1,
+      "upper_back": 0.5,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Der Lat bleibt Hauptmuskel; im EMG war seine Aktivität etwas geringer als beim breiten Obergriff, dafür arbeitete die Brust mehr. Für Muskelwachstum ist dieser EMG-Unterschied nicht belegt.",
+     "sourceIds": [
+      "s5",
+      "s1"
+     ]
+    },
+    {
+     "key": "supinated",
+     "labelDe": "Latzug, Untergriff",
+     "labelEn": "Lat pulldown, supinated",
+     "targets": {
+      "lats": 1,
+      "upper_back": 0.5,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Der Lat bleibt Hauptmuskel, war im EMG aber etwas weniger aktiv als im Obergriff. Mehr Bizeps zeigte sich im Latzug-EMG nicht, und es gibt keinen Beleg für einen besonderen Effekt auf den „unteren Lat“.",
+     "sourceIds": [
+      "s2",
+      "s5",
+      "s6"
+     ]
+    }
+   ],
+   "myths": [
+    "„Untergriff trainiert den unteren Lat“: Kein gefundener Beleg. Im EMG war der Obergriff für den Lat insgesamt sogar etwas aktiver als der Untergriff.",
+    "„Latzug in den Nacken ist besser für die Breite“: Im EMG brachte der Zug vor dem Kopf insgesamt eher mehr Aktivität in den Hauptmuskeln.",
+    "„Latzug trainiert die Arme nicht“: Bei Untrainierten wuchsen die Armbeuger durch Latzug ähnlich wie durch Curls (Ultraschall)."
+   ]
+  },
+  {
+   "nameEn": "Seated Row machine",
+   "variants": [
+    {
+     "key": "elbows_close",
+     "labelDe": "Rudern sitzend, Ellbogen eng am Körper",
+     "labelEn": "Seated row, elbows close to body",
+     "targets": {
+      "lats": 1,
+      "upper_back": 1,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Mit engem Griff und Ellbogen am Körper ist der Latissimus im EMG am aktivsten; mittlerer Trapez und Rhomboiden arbeiten ebenfalls stark.",
+     "sourceIds": [
+      "s8",
+      "s6",
+      "s9",
+      "s11"
+     ]
+    },
+    {
+     "key": "elbows_45",
+     "labelDe": "Rudern sitzend, Ellbogen ca. 45°",
+     "labelEn": "Seated row, elbows ~45°",
+     "targets": {
+      "lats": 1,
+      "upper_back": 1,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "biomech",
+     "summaryDe": "Zwischen eng und abgespreizt: Latissimus und oberer Rücken arbeiten beide stark, die hintere Schulter hilft mit. Für 45° gibt es keine eigene Messung – die Zuordnung ist aus den beiden gemessenen Griffpositionen abgeleitet.",
+     "sourceIds": [
+      "s11",
+      "s6",
+      "s8",
+      "s9"
+     ]
+    },
+    {
+     "key": "elbows_flared",
+     "labelDe": "Rudern sitzend, Ellbogen abgespreizt (~75–90°)",
+     "labelEn": "Seated row, elbows flared (~75–90°)",
+     "targets": {
+      "upper_back": 1,
+      "delt_post": 1,
+      "lats": 0.5,
+      "traps_upper": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Breiter Griff mit abgespreizten Ellbogen verschiebt die Arbeit zum gesamten Trapez (oben, mittel, unten); der Lat ist weniger aktiv. Dass die hintere Schulter Hauptmuskel wird, ist nur aus der Gelenkmechanik abgeleitet, nicht im EMG belegt.",
+     "sourceIds": [
+      "s8"
+     ]
+    }
+   ],
+   "myths": [
+    "„Enger und breiter Griff sind egal“: Für die Lat-Betonung stimmt das nicht. Im EMG war der Lat mit engem Griff klar aktiver, mit breitem Griff der Trapez."
+   ]
+  },
+  {
+   "nameEn": "Dumbbell Biceps Curl",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Kurzhantel-Curl stehend, Untergriff",
+     "labelEn": "Standing dumbbell curl, supinated",
+     "targets": {
+      "biceps": 1,
+      "brachialis": 1,
+      "brachioradialis": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Trainiert Bizeps und Brachialis, der Brachioradialis hilft mit. Im EMG ist der Bizeps mit Untergriff aktiver als mit Neutral- oder Obergriff.",
+     "sourceIds": [
+      "s16",
+      "s15",
+      "s12"
+     ]
+    }
+   ],
+   "myths": []
+  },
+  {
+   "nameEn": "Cable Row",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Kabelrudern sitzend (enger Griff)",
+     "labelEn": "Seated cable row (close grip)",
+     "targets": {
+      "lats": 1,
+      "upper_back": 1,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Trainiert Latissimus und mittleren Rücken (Trapez, Rhomboiden). Im EMG war der Lat beim Rudern sogar aktiver als beim Latzug. Breiter Griff verschiebt die Arbeit wie am Rudergerät Richtung Trapez.",
+     "sourceIds": [
+      "s6",
+      "s8",
+      "s11"
+     ]
+    }
+   ],
+   "myths": [
+    "„Schulterblätter zusammenziehen bringt viel mehr Rückenaktivität“: Im EMG hat die Schulterblattposition die Gesamtaktivität kaum verändert, nur ihre Verteilung."
+   ]
+  },
+  {
+   "nameEn": "Barbell Row",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Langhantelrudern vorgebeugt",
+     "labelEn": "Bent-over barbell row",
+     "targets": {
+      "lats": 1,
+      "upper_back": 1,
+      "delt_post": 0.5,
+      "erectors": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Trainiert den ganzen Rücken; zusätzlich hält der Rückenstrecker den Oberkörper und ist deutlich aktiv. Diese Variante belastete die Lendenwirbelsäule im Vergleich am stärksten.",
+     "sourceIds": [
+      "s10"
+     ]
+    }
+   ],
+   "myths": []
+  },
+  {
+   "nameEn": "One-Arm Dumbbell Row",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Einarmiges Kurzhantelrudern",
+     "labelEn": "One-arm dumbbell row",
+     "targets": {
+      "lats": 1,
+      "upper_back": 1,
+      "delt_post": 0.5,
+      "biceps": 0.5,
+      "brachialis": 0.5
+     },
+     "basis": "biomech",
+     "summaryDe": "Gleiches Zugmuster wie beim Langhantelrudern, aber mit abgestütztem Oberkörper, daher wenig Rückenstrecker. Die Studienlage ist dünn: ein kleiner Kongressbeitrag fand keinen EMG-Unterschied zur beidarmigen Variante.",
+     "sourceIds": [
+      "s22",
+      "s10"
+     ]
+    }
+   ],
+   "myths": []
+  },
+  {
+   "nameEn": "Reverse Pec Deck",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Reverse Butterfly (Maschine)",
+     "labelEn": "Reverse pec deck",
+     "targets": {
+      "delt_post": 1,
+      "upper_back": 0.5
+     },
+     "basis": "emg",
+     "summaryDe": "Unter 8 verglichenen Übungen hatte diese die höchste EMG-Aktivität der hinteren Schulter, deutlich mehr als Rudern oder Latzug. Mittlerer Trapez und Rhomboiden helfen beim Zurückführen mit (Gelenkmechanik).",
+     "sourceIds": [
+      "s11"
+     ]
+    }
+   ],
+   "myths": []
+  },
+  {
+   "nameEn": "Deadlift",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Kreuzheben (klassisch)",
+     "labelEn": "Conventional deadlift",
+     "targets": {
+      "glutes": 1,
+      "erectors": 1,
+      "hamstrings": 0.5,
+      "quads": 0.5,
+      "adductors": 0.5,
+      "traps_upper": 0.5,
+      "forearm_flex": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Ganzkörperübung für die Hüftstrecker (Gesäß, Beinbeuger, Adduktoren) und den Rückenstrecker; die Beinstrecker arbeiten vor allem am Anfang. Studien, die das Muskelwachstum durch Kreuzheben direkt messen, wurden nicht gefunden.",
+     "sourceIds": [
+      "s17",
+      "s18"
+     ]
+    }
+   ],
+   "myths": [
+    "„Kreuzheben ist vor allem eine Rückenübung“: Im EMG arbeiten Gesäß, Adduktoren, Beinbeuger und Beinstrecker stark mit. Der Rücken arbeitet hier vor allem haltend."
+   ]
+  },
+  {
+   "nameEn": "Back Extension",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Rückenstrecken / Hyperextension",
+     "labelEn": "Back extension",
+     "targets": {
+      "erectors": 1,
+      "hamstrings": 1,
+      "glutes": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Trainiert Rückenstrecker und Beinbeuger, das Gesäß hilft mit. Ein Hüftstreck-Training ließ im MRT besonders den langen Bizeps femoris wachsen.",
+     "sourceIds": [
+      "s19",
+      "s20"
+     ]
+    }
+   ],
+   "myths": []
+  },
+  {
+   "nameEn": "Hammer Curl",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Hammer-Curl (Neutralgriff)",
+     "labelEn": "Hammer curl",
+     "targets": {
+      "biceps": 1,
+      "brachialis": 1,
+      "brachioradialis": 0.5
+     },
+     "basis": "mixed",
+     "summaryDe": "Trainiert Bizeps, Brachialis und Brachioradialis. Im EMG war der Brachioradialis im Neutralgriff NICHT aktiver als im Untergriff, der Bizeps etwas weniger aktiv.",
+     "sourceIds": [
+      "s15",
+      "s16"
+     ]
+    }
+   ],
+   "myths": [
+    "„Hammer-Curls sind die Übung für den Brachioradialis“: Zwei EMG-Studien fanden im Neutralgriff keine höhere Brachioradialis-Aktivität als im Untergriff; nur der Obergriff erhöhte sie in einer Studie. Hypertrophie-Daten fehlen."
+   ]
+  },
+  {
+   "nameEn": "Biceps Curl Machine",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Bizepsmaschine (Scott-/Preacher-Art)",
+     "labelEn": "Biceps curl machine (preacher-style)",
+     "targets": {
+      "biceps": 1,
+      "brachialis": 1,
+      "brachioradialis": 0.5
+     },
+     "basis": "hypertrophy",
+     "summaryDe": "Preacher-Curls lassen die Armbeuger nachweislich wachsen (Ultraschall), eher im ellbogennahen Bereich. Training im gestreckten Teil der Bewegung brachte dort mehr Wachstum.",
+     "sourceIds": [
+      "s13",
+      "s14",
+      "s21"
+     ]
+    }
+   ],
+   "myths": [
+    "„Preacher-Curls formen den Bizeps-Peak“: Preacher-Curls fördern eher den ellbogennahen Teil, Schrägbank-Curls eher den schulternahen. Insgesamt sind solche regionalen Effekte laut Meta-Analyse aber klein; die Form des Muskels ist größtenteils genetisch."
+   ]
+  },
+  {
+   "nameEn": "Barbell Curl",
+   "variants": [
+    {
+     "key": "default",
+     "labelDe": "Langhantel-Curl",
+     "labelEn": "Barbell curl",
+     "targets": {
+      "biceps": 1,
+      "brachialis": 1,
+      "brachioradialis": 0.5
+     },
+     "basis": "hypertrophy",
+     "summaryDe": "Klassische Übung für die Armbeuger; im Ultraschall wuchsen sie in 10 Wochen messbar. Der Bizeps ist im Untergriff im EMG am aktivsten.",
+     "sourceIds": [
+      "s12",
+      "s16"
+     ]
+    }
+   ],
+   "myths": []
+  }
+ ],
+ "sources": [
+  {
+   "id": "s1",
+   "cite": "Andersen V et al. (2014) Effects of grip width on muscle strength and activation in the lat pull-down. Journal of Strength and Conditioning Research.",
+   "url": "https://www.pubmed.gov/24662157/",
+   "type": "EMG",
+   "finding": "Narrow, medium and wide pronated grips (1-2x biacromial width) produced similar latissimus, trapezius and infraspinatus activation over the whole movement; wide grip was slightly higher only in the eccentric phase and allowed less load."
+  },
+  {
+   "id": "s2",
+   "cite": "Lusk SJ et al. (2010) Grip width and forearm orientation effects on muscle activity during the lat pull-down. Journal of Strength and Conditioning Research.",
+   "url": "https://europepmc.org/abstract/MED/20543740",
+   "type": "EMG",
+   "finding": "Pronated grips produced greater latissimus activity than supinated grips regardless of width; grip had no significant effect on middle trapezius or biceps."
+  },
+  {
+   "id": "s3",
+   "cite": "Youdas JW et al. (2010) Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise. Journal of Strength and Conditioning Research.",
+   "url": "https://europepmc.org/abstract/MED/21068680",
+   "type": "EMG",
+   "finding": "Latissimus was the most active muscle (117-130% MVIC); biceps and pectoralis major were more active in the chin-up, lower trapezius more active in the pull-up."
+  },
+  {
+   "id": "s4",
+   "cite": "Dickie JA et al. (2017) Electromyographic analysis of muscle activation during pull-up variations. Journal of Electromyography and Kinesiology.",
+   "url": "https://europepmc.org/abstract/MED/28011412",
+   "type": "EMG",
+   "finding": "Across supinated, pronated, neutral and rope pull-ups, activation was mostly similar; only middle trapezius was higher with pronated vs neutral grip."
+  },
+  {
+   "id": "s5",
+   "cite": "Signorile JF et al. (2002) A comparative electromyographical investigation of muscle utilization patterns using various hand positions during the lat pull-down. Journal of Strength and Conditioning Research.",
+   "url": "https://paulogentil.com/pdf/TREINO%20DE%20FORC%CC%A7A/Treinamento%20com%20pesos/S60.pdf",
+   "type": "EMG",
+   "finding": "Wide-grip anterior pulldown produced the highest latissimus activity vs close (V-bar), supinated and behind-neck grips; close grip produced the most pectoralis major activity."
+  },
+  {
+   "id": "s6",
+   "cite": "Lehman GJ et al. (2004) Variations in muscle activation levels during traditional latissimus dorsi weight training exercises: an experimental study. Dynamic Medicine.",
+   "url": "https://doi.org/10.1186/1476-5918-3-4",
+   "type": "EMG",
+   "finding": "The seated row (protracted) produced higher latissimus activity than both pulldowns and seated rows more middle trapezius/rhomboid activity than the reverse-grip pulldown; biceps activity did not differ significantly between wide-grip, reverse-grip pulldowns and rows; scapular retraction did not significantly change activity."
+  },
+  {
+   "id": "s7",
+   "cite": "Padovan R et al. (2024) High-density electromyography excitation in front vs. back lat pull-down prime movers. Journal of Human Kinetics.",
+   "url": "https://air.unimi.it/handle/2434/1048848",
+   "type": "EMG",
+   "finding": "Front pulldown gave overall greater prime-mover excitation (latissimus and pec in lowering phase, biceps and posterior deltoid in lifting phase) than behind-the-neck pulldown."
+  },
+  {
+   "id": "s8",
+   "cite": "Padovan R et al. (2025) High-density surface electromyography excitation of prime movers in the narrow vs. wide grip seated row exercise. Journal of Human Kinetics (epub).",
+   "url": "https://johk.pl/?p=9499",
+   "type": "EMG",
+   "finding": "Narrow-grip seated row produced greater latissimus excitation, while wide grip produced greater upper, middle and lower trapezius and lateral deltoid excitation."
+  },
+  {
+   "id": "s9",
+   "cite": "Padovan R et al. (2025) High-density surface electromyography excitation of prime movers across scapular positions in the seated row. Journal of Functional Morphology and Kinesiology.",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12821611/",
+   "type": "EMG",
+   "finding": "Fixed vs free scapular position changed only phase-specific latissimus, middle trapezius and posterior deltoid excitation modestly; scapular constraint mainly redistributed rather than increased activity."
+  },
+  {
+   "id": "s10",
+   "cite": "Fenwick CMJ et al. (2009) Comparison of different rowing exercises: trunk muscle activation and lumbar spine motion, load, and stiffness. Journal of Strength and Conditioning Research.",
+   "url": "https://www.backfitpro.com/medical-scientific-articles/2009/[80]Fenwick,C.M.J.(2009)Comparison-of-different-rowing-exercises[J.Strength-and-Cond.].pdf",
+   "type": "EMG",
+   "finding": "The standing bent-over row produced high activation across latissimus and thoracic/lumbar erector spinae (lumbar ES ~43% MVC) and the largest lumbar spine load; gluteal and biceps femoris activity was low (~12-19% MVC)."
+  },
+  {
+   "id": "s11",
+   "cite": "Botton CE et al. (2013) Electromyographical analysis of the deltoid between different strength training exercises. Medicina Sportiva.",
+   "url": "https://www.bisp-surf.de/Record/PU201312008451",
+   "type": "EMG",
+   "finding": "Reverse pec deck produced the highest posterior deltoid activation (~90%) of eight exercises, significantly above lat pulldown (~58%) and seated row (~54%)."
+  },
+  {
+   "id": "s12",
+   "cite": "Gentil P et al. (2015) Single vs. multi-joint resistance exercises: effects on muscle strength and hypertrophy. Asian Journal of Sports Medicine.",
+   "url": "https://brieflands.com/articles/asjsm-21609.html",
+   "type": "hypertrophy-US",
+   "finding": "In untrained men, 10 weeks of lat pulldown vs barbell curl produced similar elbow flexor thickness gains (+6.1% vs +5.8%, ultrasound) and similar strength gains."
+  },
+  {
+   "id": "s13",
+   "cite": "Pedrosa GF et al. (2023) Training in the initial range of motion promotes greater muscle adaptations than at final in the arm curl. Sports (Basel).",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9960616",
+   "type": "hypertrophy-US",
+   "finding": "Preacher curl training in the initial (elbow-extended) range produced greater biceps CSA gain at the distal site (70% humerus length) than final-range training, with similar mid-belly gains."
+  },
+  {
+   "id": "s14",
+   "cite": "Stavinski N et al. (2025) Distinct muscle growth and strength adaptations after preacher and incline biceps curls. International Journal of Sports Medicine.",
+   "url": "https://nutrition-evidence.com/article/530213/distinct-muscle-growth-and-strength-adaptations-after-preacher-and-incline-biceps-curls",
+   "type": "hypertrophy-US",
+   "finding": "Over 8 weeks in women, incline curls grew the proximal elbow flexors more and preacher curls the distal elbow flexors more (muscle thickness)."
+  },
+  {
+   "id": "s15",
+   "cite": "Kleiber T et al. (2015) Muscular coordination of biceps brachii and brachioradialis in elbow flexion with respect to hand position. Frontiers in Physiology.",
+   "url": "https://frontiersin.org/journals/physiology/articles/10.3389/fphys.2015.00215/full",
+   "type": "EMG",
+   "finding": "Brachioradialis contribution was higher only with a pronated hand, not different between neutral and supinated; biceps activation was unchanged across hand positions (slow 20°/s flexion)."
+  },
+  {
+   "id": "s16",
+   "cite": "Coratella G et al. (2023) Biceps brachii and brachioradialis excitation in biceps curl exercise: different handgrips, different synergy. Sports (Basel).",
+   "url": "https://www.mdpi.com/2075-4663/11/3/64",
+   "type": "EMG",
+   "finding": "In bodybuilders doing 8-RM cable curls, the supinated grip produced the highest biceps and also the highest brachioradialis excitation in the lifting phase; neutral grip did not increase brachioradialis."
+  },
+  {
+   "id": "s17",
+   "cite": "Escamilla RF et al. (2002) An electromyographic analysis of sumo and conventional style deadlifts. Medicine and Science in Sports and Exercise.",
+   "url": "https://read.qxmd.com/read/11932579/an-electromyographic-analysis-of-sumo-and-conventional-style-deadlifts",
+   "type": "EMG",
+   "finding": "Deadlifts activated quadriceps, gluteus maximus, adductors and erector spinae mainly at greater knee flexion and hamstrings/gastrocnemius at smaller knee angles; sumo increased vasti activity."
+  },
+  {
+   "id": "s18",
+   "cite": "McAllister MJ et al. (2014) Muscle activation during various hamstring exercises. Journal of Strength and Conditioning Research.",
+   "url": "https://oliverfinlay.com/assets/pdf/mcallister et al (2014) muscle activation during various hamstring exercises.pdf",
+   "type": "EMG",
+   "finding": "The Romanian deadlift produced the highest eccentric hamstring activity, exceeding prone leg curl and glute-ham raise."
+  },
+  {
+   "id": "s19",
+   "cite": "Bourne MN et al. (2017) Impact of the Nordic hamstring and hip extension exercises on hamstring architecture and morphology: implications for injury prevention. British Journal of Sports Medicine.",
+   "url": "https://bjsm.bmj.com/content/51/5/469",
+   "type": "hypertrophy-MRI",
+   "finding": "10 weeks of hip extension training increased biceps femoris long head volume more than Nordic curls or control, and increased semitendinosus volume vs control (MRI); exact exercise setup was not visible on the page."
+  },
+  {
+   "id": "s20",
+   "cite": "Yoo WG (2015) Comparison of the isolated contraction ratios of the hip extensors and erector spinae muscles of the lumbar region and thoracic muscles during different back extension exercises. Journal of Physical Therapy Science.",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4339128",
+   "type": "EMG",
+   "finding": "Roman-chair back extension showed lumbar erector spinae and gluteus maximus contributing substantially (~38% and ~29% of measured activity), with no lumbar ES difference vs other extension exercises."
+  },
+  {
+   "id": "s21",
+   "cite": "Varovic D et al. (2024) Regional hypertrophy with resistance training - does muscle length matter? A systematic review and meta-analysis. SportRxiv (preprint).",
+   "url": "https://sportrxiv.org/index.php/server/preprint/view/464",
+   "type": "review",
+   "finding": "Across studies, training at longer vs shorter muscle lengths produced only trivial differences in regional (proximal/mid/distal) hypertrophy."
+  },
+  {
+   "id": "s22",
+   "cite": "Lee ELY et al. (2024) Electromyographic activation during unilateral and bilateral bent over row exercises among trained men. AIP Conference Proceedings.",
+   "url": "https://update.library.uitm.edu.my/Record/2-s2.0-85189340484/Details",
+   "type": "EMG",
+   "finding": "No significant EMG differences in latissimus, posterior deltoid or biceps between unilateral and bilateral bent-over rows (low-quality conference paper)."
+  }
+ ]
+}
