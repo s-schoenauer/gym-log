@@ -1,4 +1,5 @@
-import Dexie, { type Table } from 'dexie';
+import Dexie, { type Table, type Transaction } from 'dexie';
+import { USER_VARIANTS } from './evidence';
 
 /** Fields every record carries, so a server sync can be added later without migrating data. */
 export interface Base {
@@ -24,7 +25,15 @@ export interface Exercise extends Base {
   gymNote: string;
   isMine: 0 | 1;
   isCustom: 0 | 1;
+  /** Stable library key (slug of the English name) – links to the study-based muscle mapping. null for custom exercises. */
+  key: string | null;
+  /** Chosen execution variant, e.g. 'lean_forward' for dips. null = default. */
+  variant: string | null;
+  /** Own muscle mapping that overrides the library one. null = use the library mapping. */
+  targets: Partial<Record<string, number>> | null;
 }
+
+export const slug = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[^\w]+/g, '_').replace(/^_|_$/g, '');
 
 export interface Plan extends Base {
   name: string;
@@ -77,6 +86,15 @@ export interface ExtraLog extends Base {
 export interface Settings extends Base {
   language: 'de' | 'en';
   gymName: string;
+}
+
+/** v3 data fix-up: library key, chosen variant and own mapping on every exercise. */
+async function addMuscleFields(tx: Transaction) {
+  await tx.table('exercises').toCollection().modify((e: Exercise) => {
+    if (e.key === undefined) e.key = e.isCustom ? null : slug(e.nameEn);
+    if (e.variant === undefined) e.variant = (e.key && USER_VARIANTS[e.key]) || null;
+    if (e.targets === undefined) e.targets = null;
+  });
 }
 
 /** [plan, partner exercise] – lateral raises are paired with the partner as a superset. */
@@ -133,6 +151,8 @@ class GymDB extends Dexie {
         }
       }
     });
+    // v3: study-based muscle mapping per exercise
+    this.version(3).stores({}).upgrade(addMuscleFields);
   }
 }
 

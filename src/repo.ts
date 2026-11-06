@@ -321,12 +321,12 @@ export async function setDefaultSets(id: string, defaultSets: number) {
 export async function createExercise(v: { nameDe: string; nameEn: string; muscle: Muscle; equipment: Equipment; gymNote: string }) {
   const loadType: LoadType = v.equipment === 'dumbbell' ? 'perHand' : v.equipment === 'bodyweight' ? 'bodyweightPlus' : 'weight';
   const weightStep = v.equipment === 'dumbbell' ? 2 : v.equipment === 'machine' ? 5 : 2.5;
-  const e: Exercise = { ...base(), nameDe: v.nameDe, nameEn: v.nameEn || v.nameDe, muscle: v.muscle, equipment: v.equipment, loadType, weightStep, gymNote: v.gymNote, isMine: 1, isCustom: 1 };
+  const e: Exercise = { ...base(), nameDe: v.nameDe, nameEn: v.nameEn || v.nameDe, muscle: v.muscle, equipment: v.equipment, loadType, weightStep, gymNote: v.gymNote, isMine: 1, isCustom: 1, key: null, variant: null, targets: null };
   await db.exercises.add(e);
   return e.id;
 }
 
-export async function updateExercise(id: string, patch: Partial<Pick<Exercise, 'nameDe' | 'nameEn' | 'gymNote' | 'weightStep' | 'isMine'>>) {
+export async function updateExercise(id: string, patch: Partial<Pick<Exercise, 'nameDe' | 'nameEn' | 'gymNote' | 'weightStep' | 'isMine' | 'variant' | 'targets'>>) {
   await db.exercises.update(id, { ...patch, ...upd });
 }
 

@@ -165,3 +165,19 @@ textarea.note { width: 100%; background: var(--surface); border: 1px solid var(-
 .linkrow { display: flex; align-items: center; gap: 2px; width: 100%; min-height: 36px; padding: 0 0 0 44px; background: none; border: 0;
   font-family: var(--cond); font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
 .sgroup .linkrow { min-height: 32px; }
+
+/* Muscle detail */
+.seg.seg4 { grid-template-columns: repeat(4, 1fr); }
+.seg.seg4 button { font-size: 14px; letter-spacing: 0.5px; min-height: 40px; padding: 0 2px; }
+.mrow { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 40px; gap: 10px; align-items: center; min-height: 40px; width: 100%;
+  background: none; border: 0; padding: 0; color: var(--text); text-align: left; }
+.mname { font-size: 14px; font-weight: 600; line-height: 1.15; }
+.mval { text-align: right; font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.stackbar { display: flex; overflow: hidden; }
+.stackbar > span { display: block; height: 14px; }
+.stackbar > span + span { border-left: 1px solid #000; }
+.chip.half { background: #3a3a3a; border-color: #6b6b6b; color: var(--text); }
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::before { content: '▸ '; }
+details[open] > summary::before { content: '▾ '; }

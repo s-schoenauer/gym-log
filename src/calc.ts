@@ -1,5 +1,7 @@
 import type { Exercise, Muscle, WorkoutSet } from './db';
 import { type Data, exercisesOf, setsOf, lastPerformance, todayKey } from './repo';
+import { SUB_MUSCLES, GROUP_FALLBACK, type SubMuscle, type Targets } from './muscles';
+import { EVIDENCE } from './evidence';
 
 export type Pair = Pick<WorkoutSet, 'weightKg' | 'reps'>;
 
@@ -117,6 +119,70 @@ export function setsPerMuscleThisWeek(d: Data) {
     }
   }
   return counts;
+}
+
+/** Muscle mapping used for stats: own override → chosen study variant → default variant → coarse group fallback. */
+export function effectiveTargets(e: Exercise): Targets {
+  if (e.targets && Object.keys(e.targets).length) return e.targets as Targets;
+  const ev = e.key ? EVIDENCE[e.key] : undefined;
+  if (ev) return (ev.variants.find((v) => v.key === e.variant) ?? ev.variants[0]).targets;
+  return GROUP_FALLBACK[e.muscle];
+}
+
+export function variantOf(e: Exercise) {
+  const ev = e.key ? EVIDENCE[e.key] : undefined;
+  return ev ? ev.variants.find((v) => v.key === e.variant) ?? ev.variants[0] : null;
+}
+
+export function mondayOf(date: Date, weeksBack = 0) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - ((date.getDay() + 6) % 7) - weeksBack * 7).getTime();
+}
+
+export interface SubStat { sets: number; parts: { exercise: Exercise; sets: number; weight: number }[] }
+
+export type Period = 'week' | '7d' | 'month' | '30d';
+export const PERIODS: Period[] = ['week', '7d', 'month', '30d'];
+
+/** Start of a period: calendar week (Mon) / month (1st) or rolling 7 / 30 days including today. */
+export function periodStart(p: Period, now = new Date()) {
+  const day = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  if (p === 'week') return mondayOf(now);
+  if (p === 'month') return new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+  day.setDate(day.getDate() - (p === '7d' ? 6 : 29));
+  return day.getTime();
+}
+
+/** Days covered so far (for a per-week average). */
+export const periodDays = (p: Period, now = new Date()) =>
+  Math.max(1, Math.round((new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() - periodStart(p, now)) / 864e5) + 1);
+
+/**
+ * Sets per sub-muscle in a period. A done set counts with the exercise's weight for that muscle
+ * (1 = direct, 0.5 = indirect).
+ */
+export function subMuscleSets(d: Data, p: Period) {
+  const from = periodStart(p);
+  const out = Object.fromEntries(SUB_MUSCLES.map((m) => [m, { sets: 0, parts: [] } as SubStat])) as Record<SubMuscle, SubStat>;
+  const counts = new Map<string, number>();
+  for (const w of d.workouts) {
+    if (w.startedAt < from) continue;
+    for (const we of exercisesOf(d, w.id)) {
+      if (we.skipped) continue;
+      const n = doneSets(d, we.id).length;
+      if (n) counts.set(we.exerciseId, (counts.get(we.exerciseId) ?? 0) + n);
+    }
+  }
+  for (const [exId, n] of counts) {
+    const e = d.ex.get(exId);
+    if (!e) continue;
+    for (const [m, wgt] of Object.entries(effectiveTargets(e)) as [SubMuscle, number][]) {
+      if (!out[m] || !wgt) continue;
+      out[m].sets += n * wgt;
+      out[m].parts.push({ exercise: e, sets: n, weight: wgt });
+    }
+  }
+  for (const m of SUB_MUSCLES) out[m].parts.sort((a, b) => b.sets * b.weight - a.sets * a.weight);
+  return out;
 }
 
 export function trainingsThisWeek(d: Data) {

@@ -1,4 +1,5 @@
-import { db, base, uuid7, DEFAULT_SUPERSETS, type Exercise, type Muscle, type Equipment, type LoadType } from './db';
+import { USER_VARIANTS } from './evidence';
+import { db, base, uuid7, slug, DEFAULT_SUPERSETS, type Exercise, type Muscle, type Equipment, type LoadType } from './db';
 
 // [de, en, muscle, equipment, loadType, step, mine]
 type Row = [string, string, Muscle, Equipment, LoadType, number, 0 | 1];
@@ -62,7 +63,7 @@ export async function seedIfEmpty() {
     if ((await db.settings.count()) > 0) return;
     const byName = new Map<string, Exercise>();
     const exercises: Exercise[] = LIB.map(([nameDe, nameEn, muscle, equipment, loadType, weightStep, isMine]) => {
-      const e: Exercise = { ...base(), nameDe, nameEn, muscle, equipment, loadType, weightStep, gymNote: '', isMine, isCustom: 0 };
+      const e: Exercise = { ...base(), nameDe, nameEn, muscle, equipment, loadType, weightStep, gymNote: '', isMine, isCustom: 0, key: slug(nameEn), variant: USER_VARIANTS[slug(nameEn)] ?? null, targets: null };
       byName.set(nameDe, e);
       return e;
     });

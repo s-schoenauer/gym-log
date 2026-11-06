@@ -1,10 +1,9 @@
 import type { Data } from '../repo';
-import type { Muscle } from '../db';
-import { heatmap, exerciseHistory, setsPerMuscleThisWeek, bestSet } from '../calc';
+import { heatmap, exerciseHistory, bestSet } from '../calc';
+import { MuscleDetail } from './MuscleDetail';
 import { useT, exName, num, shortDate } from '../i18n';
 import { go } from '../App';
 
-const MUSCLES: Muscle[] = ['chest', 'back', 'shoulders', 'arms', 'legs', 'core'];
 
 export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
   const { t, lang } = useT();
@@ -17,8 +16,6 @@ export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
     .sort((a, b) => b.h.length - a.h.length);
   const sel = withHist.find((x) => x.e.id === q.get('ex')) ?? withHist[0];
 
-  const muscles = setsPerMuscleThisWeek(d);
-  const maxSets = Math.max(10, ...Object.values(muscles));
 
   return (
     <main className="screen">
@@ -48,16 +45,7 @@ export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
         )}
       </section>
 
-      <section className="stack gap8 mt24" style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}>
-        <span className="eyebrow">{t.setsPerMuscle}</span>
-        {MUSCLES.map((m) => (
-          <div key={m} style={{ display: 'grid', gridTemplateColumns: '96px 1fr 28px', gap: 10, alignItems: 'center' }}>
-            <span className="cond" style={{ fontSize: 17, fontWeight: 700, textTransform: 'uppercase' }}>{t.muscles[m]}</span>
-            <div className="bar"><div style={{ width: `${(muscles[m] / maxSets) * 100}%` }} /></div>
-            <span className="cond" style={{ textAlign: 'right', fontSize: 18, fontWeight: 800 }}>{muscles[m]}</span>
-          </div>
-        ))}
-      </section>
+      <MuscleDetail d={d} />
     </main>
   );
 

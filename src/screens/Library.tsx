@@ -4,6 +4,7 @@ import { type Data, activeWorkout, addExerciseToWorkout, addPlanItem, createExer
 import { useT, exName, setText, num } from '../i18n';
 import { go } from '../App';
 import { Icon, Sheet, Toaster, toast } from '../ui';
+import { MusclePanel } from './MusclePanel';
 
 const MUSCLES: Muscle[] = ['chest', 'back', 'shoulders', 'arms', 'legs', 'core'];
 const EQUIP: Equipment[] = ['machine', 'dumbbell', 'barbell', 'cable', 'bodyweight'];
@@ -83,7 +84,7 @@ export function Library({ d, q }: { d: Data; q: URLSearchParams }) {
   );
 }
 
-function EditSheet({ ex, initialName, onClose, onCreated }: { d: Data; ex: Exercise | null; initialName: string; onClose: () => void; onCreated: (id: string) => void }) {
+function EditSheet({ d, ex, initialName, onClose, onCreated }: { d: Data; ex: Exercise | null; initialName: string; onClose: () => void; onCreated: (id: string) => void }) {
   const { t, lang } = useT();
   const [nameDe, setDe] = useState(ex?.nameDe ?? initialName);
   const [nameEn, setEn] = useState(ex?.nameEn ?? '');
@@ -130,6 +131,7 @@ function EditSheet({ ex, initialName, onClose, onCreated }: { d: Data; ex: Exerc
         </>
       )}
       <button className="btn primary block" onClick={save} disabled={!nameDe.trim()}>{ex ? t.save : t.create}</button>
+      {ex && <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><MusclePanel ex={d.ex.get(ex.id) ?? ex} /></div>}
     </Sheet>
   );
 }
