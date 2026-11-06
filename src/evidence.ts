@@ -1283,13 +1283,13 @@ export const SOURCES: Record<string, Source> = {
   "cite": "Coratella G, et al. (2020) An Electromyographic Analysis of Lateral Raise Variations and Frontal Raise in Competitive Bodybuilders. Int J Environ Res Public Health.",
   "url": "https://www.mdpi.com/1660-4601/17/17/6015",
   "type": "EMG",
-  "finding": "Medial deltoid highest in neutral lateral raise; internal-rotation raise maximised posterior deltoid and upper trapezius; front raise maximised anterior and minimised medial deltoid."
+  "finding": "Medial deltoid highest in neutral lateral raise; internal-rotation raise maximised posterior deltoid and upper trapezius; front raise maximised anterior deltoid."
  },
  "A_s15": {
   "cite": "Haugen ME, et al. (2023) Effect of free-weight vs. machine-based strength training on maximal strength, hypertrophy and jump performance: a systematic review and meta-analysis. BMC Sports Sci Med Rehabil.",
   "url": "https://doaj.org/article/a7282dba5e674176bde2a8239832d2f7",
   "type": "review",
-  "finding": "Across 13 studies no difference in hypertrophy between free-weight and machine training (SMD -0.055)."
+  "finding": "Meta-analysis of 13 studies; in the 5 studies measuring hypertrophy, no difference between free-weight and machine training (SMD -0.055, p=0.75)."
  },
  "A_s16": {
   "cite": "Kim, Kang (2020) Influence of Pre-Emptive Scapular Posterior Tilt on Scapular Muscle Activation and Scapulohumeral Movements during Shoulder Horizontal Abduction in the Prone Position. J Int Acad Phys Ther Res.",
@@ -1313,7 +1313,7 @@ export const SOURCES: Record<string, Source> = {
   "cite": "Youdas JW et al. (2010) Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise. Journal of Strength and Conditioning Research.",
   "url": "https://europepmc.org/abstract/MED/21068680",
   "type": "EMG",
-  "finding": "Latissimus was the most active muscle (117-130% MVIC); biceps and pectoralis major were more active in the chin-up, lower trapezius more active in the pull-up."
+  "finding": "Latissimus was the most active muscle in both; biceps and pectoralis major were more active in the chin-up, lower trapezius more active in the pull-up."
  },
  "B_s4": {
   "cite": "Dickie JA et al. (2017) Electromyographic analysis of muscle activation during pull-up variations. Journal of Electromyography and Kinesiology.",
@@ -1361,7 +1361,7 @@ export const SOURCES: Record<string, Source> = {
   "cite": "Botton CE et al. (2013) Electromyographical analysis of the deltoid between different strength training exercises. Medicina Sportiva.",
   "url": "https://www.bisp-surf.de/Record/PU201312008451",
   "type": "EMG",
-  "finding": "Reverse pec deck produced the highest posterior deltoid activation (~90%) of eight exercises, significantly above lat pulldown (~58%) and seated row (~54%)."
+  "finding": "Reverse pec deck produced the highest posterior deltoid activation (~90%) of eight exercises, ahead of incline lat pulldown (~58%) and seated row (~54%)."
  },
  "B_s12": {
   "cite": "Gentil P et al. (2015) Single vs. multi-joint resistance exercises: effects on muscle strength and hypertrophy. Asian Journal of Sports Medicine.",
@@ -1438,7 +1438,7 @@ export const SOURCES: Record<string, Source> = {
  "C_s2": {
   "cite": "Earp JE et al. (2015) Inhomogeneous quadriceps femoris hypertrophy in response to strength and power training. Medicine and Science in Sports and Exercise 47(11):2389-2397.",
   "url": "https://ro.ecu.edu.au/ecuworkspost2013/1021",
-  "type": "hypertrophy-MRI",
+  "type": "hypertrophy-US",
   "finding": "After 8 weeks of heavy or jump squats the vasti grew regionally, but no hypertrophy was observed in rectus femoris at any location."
  },
  "C_s3": {
