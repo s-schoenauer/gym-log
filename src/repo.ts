@@ -65,24 +65,52 @@ export function planItemsOf(d: Data, planId: string) {
 }
 
 /** The most recent finished workout where this exercise has done sets (optionally ignoring one workout). */
-export function lastPerformance(d: Data, exerciseId: string, excludeWorkoutId?: string) {
+// ---------- context (pre-fatigue from superset partners) ----------
+
+/**
+ * Context of an exercise = the exercises it is paired with in a superset ('' = done on its own).
+ * Progress is compared within the same context, because pre-fatigue from the partner changes what is possible.
+ */
+export const contextKey = (partnerExerciseIds: string[]) => [...new Set(partnerExerciseIds)].sort().join(',');
+
+export function contextOfWe(d: Data, we: WorkoutExercise) {
+  const st = stations(exercisesOf(d, we.workoutId)).find((s) => s.some((x) => x.id === we.id)) ?? [we];
+  return contextKey(st.filter((x) => x.id !== we.id && !x.skipped).map((x) => x.exerciseId));
+}
+
+export function contextOfPlanItem(items: PlanItem[], item: PlanItem) {
+  const st = stations(items).find((s) => s.includes(item)) ?? [item];
+  return contextKey(st.filter((x) => x !== item).map((x) => x.exerciseId));
+}
+
+export interface Performance { workout: Workout; we: WorkoutExercise; sets: WorkoutSet[]; ctx: string; sameCtx: boolean }
+
+/**
+ * Most recent finished performance of an exercise. With `ctx` given, the latest one in that context wins;
+ * only if the exercise was never done in that context, the latest one in any context is returned (sameCtx = false).
+ */
+export function lastPerformance(d: Data, exerciseId: string, excludeWorkoutId?: string, ctx?: string): Performance | null {
   const wById = new Map(d.workouts.map((w) => [w.id, w]));
-  let best: { workout: Workout; we: WorkoutExercise; sets: WorkoutSet[] } | null = null;
+  let any: Performance | null = null, same: Performance | null = null;
   for (const we of d.workoutExercises) {
     if (we.exerciseId !== exerciseId || we.skipped || we.workoutId === excludeWorkoutId) continue;
     const w = wById.get(we.workoutId);
     if (!w || w.finishedAt === null) continue;
     const sets = setsOf(d, we.id).filter((s) => s.done);
     if (!sets.length) continue;
-    if (!best || w.finishedAt > best.workout.finishedAt!) best = { workout: w, we, sets };
+    const c = contextOfWe(d, we);
+    const p = { workout: w, we, sets, ctx: c, sameCtx: ctx === undefined || c === ctx };
+    if (!any || w.finishedAt > any.workout.finishedAt!) any = p;
+    if (ctx !== undefined && c === ctx && (!same || w.finishedAt > same.workout.finishedAt!)) same = p;
   }
-  return best;
+  if (ctx === undefined) return any;
+  return same ?? (any ? { ...any, sameCtx: false } : null);
 }
 
 // ---------- workouts ----------
 
-async function prefill(d: Data, weId: string, exerciseId: string, workoutId: string, count: number) {
-  const last = lastPerformance(d, exerciseId, workoutId);
+async function prefill(d: Data, weId: string, exerciseId: string, workoutId: string, count: number, ctx: string) {
+  const last = lastPerformance(d, exerciseId, workoutId, ctx);
   const src = last?.sets ?? [];
   const n = Math.max(count, src.length);
   const rows: WorkoutSet[] = [];
@@ -105,7 +133,7 @@ export async function startWorkout(d: Data, planId: string | null) {
       const sid = it.supersetId ? sids.get(it.supersetId) ?? sids.set(it.supersetId, uuid7()).get(it.supersetId)! : null;
       const we: WorkoutExercise = { ...base(), workoutId: w.id, exerciseId: it.exerciseId, sortOrder: i, replacedFromId: null, skipped: 0, note: '', supersetId: sid };
       await db.workoutExercises.add(we);
-      await prefill(d, we.id, it.exerciseId, w.id, it.defaultSets);
+      await prefill(d, we.id, it.exerciseId, w.id, it.defaultSets, contextOfPlanItem(items, it));
     }
   });
   return w.id;
@@ -116,7 +144,7 @@ export async function addExerciseToWorkout(d: Data, workoutId: string, exerciseI
   const we: WorkoutExercise = { ...base(), workoutId, exerciseId, sortOrder: order, replacedFromId: null, skipped: 0, note: '', supersetId: null };
   await db.transaction('rw', [db.workoutExercises, db.sets], async () => {
     await db.workoutExercises.add(we);
-    await prefill(d, we.id, exerciseId, workoutId, 3);
+    await prefill(d, we.id, exerciseId, workoutId, 3, '');
   });
   return we.id;
 }
@@ -167,7 +195,7 @@ export async function swapExercise(d: Data, we: WorkoutExercise, newExerciseId: 
     const count = Math.max(3, old.length);
     for (const s of old) await db.sets.update(s.id, { deletedAt: now(), updatedAt: now() });
     await db.workoutExercises.update(we.id, { exerciseId: newExerciseId, replacedFromId: we.replacedFromId ?? we.exerciseId, skipped: 0, ...upd });
-    await prefill(d, we.id, newExerciseId, w.id, count);
+    await prefill(d, we.id, newExerciseId, w.id, count, contextOfWe(d, we));
     if (inPlan && w.planId) {
       const item = planItemsOf(d, w.planId).find((p) => p.exerciseId === we.exerciseId);
       if (item) await db.planItems.update(item.id, { exerciseId: newExerciseId, ...upd });

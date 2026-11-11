@@ -1,5 +1,5 @@
 import type { Exercise, Muscle, WorkoutSet } from './db';
-import { type Data, exercisesOf, setsOf, lastPerformance, todayKey } from './repo';
+import { type Data, exercisesOf, setsOf, lastPerformance, todayKey, contextOfWe } from './repo';
 import { SUB_MUSCLES, GROUP_FALLBACK, type SubMuscle, type Targets } from './muscles';
 import { EVIDENCE } from './evidence';
 
@@ -21,12 +21,13 @@ export function doneSets(d: Data, weId: string) {
   return setsOf(d, weId).filter((s) => s.done);
 }
 
-/** Best done set of an exercise across all finished workouts before `beforeTs`. */
-export function prevBest(d: Data, exerciseId: string, beforeTs: number) {
+/** Best done set of an exercise across all finished workouts before `beforeTs` (optionally only in one context). */
+export function prevBest(d: Data, exerciseId: string, beforeTs: number, ctx?: string) {
   const wById = new Map(d.workouts.map((w) => [w.id, w]));
   let best: WorkoutSet | null = null;
   for (const we of d.workoutExercises) {
     if (we.exerciseId !== exerciseId) continue;
+    if (ctx !== undefined && contextOfWe(d, we) !== ctx) continue;
     const w = wById.get(we.workoutId);
     if (!w?.finishedAt || w.finishedAt >= beforeTs) continue;
     const b = bestSet(doneSets(d, we.id));
@@ -41,6 +42,8 @@ export interface ExerciseResult {
   last: WorkoutSet | null;
   isPr: boolean;
   prevBest: WorkoutSet | null;
+  /** superset partners ('' = on its own); records and comparisons are within this context */
+  ctx: string;
 }
 
 export function workoutSummary(d: Data, workoutId: string) {
@@ -56,9 +59,10 @@ export function workoutSummary(d: Data, workoutId: string) {
     sets += ds.length;
     vol += volume(ds, e);
     const best = bestSet(ds)!;
-    const pb = prevBest(d, e.id, w.startedAt);
-    const lp = lastPerformance(d, e.id, workoutId);
-    results.push({ exercise: e, best, last: lp ? bestSet(lp.sets) : null, isPr: !!pb && beats(best, pb), prevBest: pb });
+    const ctx = contextOfWe(d, we);
+    const pb = prevBest(d, e.id, w.startedAt, ctx);
+    const lp = lastPerformance(d, e.id, workoutId, ctx);
+    results.push({ exercise: e, best, last: lp?.sameCtx ? bestSet(lp.sets) : null, isPr: !!pb && beats(best, pb), prevBest: pb, ctx });
   }
   return { workout: w, minutes: Math.max(1, Math.round((end - w.startedAt) / 60000)), sets, volume: vol, results };
 }
@@ -93,15 +97,15 @@ export function heatmap(d: Data, weeks = 12) {
   return { days, trainings };
 }
 
-/** Best set per finished workout for one exercise, oldest first. */
+/** Best set per finished workout for one exercise, oldest first, with its context. */
 export function exerciseHistory(d: Data, exerciseId: string) {
-  const out: { ts: number; set: WorkoutSet }[] = [];
+  const out: { ts: number; set: WorkoutSet; ctx: string }[] = [];
   for (const w of d.workouts) {
     if (!w.finishedAt) continue;
     for (const we of exercisesOf(d, w.id)) {
       if (we.exerciseId !== exerciseId) continue;
       const b = bestSet(doneSets(d, we.id));
-      if (b) out.push({ ts: w.startedAt, set: b });
+      if (b) out.push({ ts: w.startedAt, set: b, ctx: contextOfWe(d, we) });
     }
   }
   return out;

@@ -1,7 +1,7 @@
 import type { Data } from '../repo';
 import { heatmap, exerciseHistory, bestSet } from '../calc';
 import { MuscleDetail } from './MuscleDetail';
-import { useT, exName, num, shortDate } from '../i18n';
+import { useT, exName, num, shortDate, ctxLabel } from '../i18n';
 import { go } from '../App';
 
 
@@ -51,7 +51,11 @@ export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
 
   function ExerciseChart({ d: _d, sel, options }: { d: Data; sel: { e: (typeof withHist)[number]['e']; h: ReturnType<typeof exerciseHistory> }; options: (typeof withHist)[number]['e'][] }) {
     void _d;
-    const { e, h } = sel;
+    const { e } = sel;
+    // one line per context (superset partner): pre-fatigue makes the contexts incomparable
+    const ctxs = [...new Set([...sel.h].reverse().map((x) => x.ctx))];
+    const ctx = ctxs.includes(q.get('ctx') ?? '\u0000') ? q.get('ctx')! : sel.h[sel.h.length - 1].ctx;
+    const h = sel.h.filter((x) => x.ctx === ctx);
     const bw = e.loadType === 'bodyweightPlus';
     const best = bestSet(h.map((x) => x.set))!;
     // bodyweight with no added weight: chart reps instead
@@ -74,6 +78,19 @@ export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
           </label>
           <span className="eyebrow">{t.bestSet}</span>
         </div>
+        {ctxs.length > 1 && (
+          <>
+            <div className="chips scroll">
+              {ctxs.map((c) => (
+                <button key={c || 'solo'} className={`chip${c === ctx ? ' on' : ''}`} style={{ textTransform: 'none', letterSpacing: 0, fontSize: 15 }}
+                  aria-pressed={c === ctx} onClick={() => go(`#/stats?ex=${e.id}&ctx=${encodeURIComponent(c)}`)}>
+                  {ctxLabel(c, d.ex, lang)}
+                </button>
+              ))}
+            </div>
+            <span className="muted small">{t.ctxHint}</span>
+          </>
+        )}
         <span className="cond accent" style={{ fontSize: 56, fontWeight: 800, lineHeight: 0.9 }}>
           {useReps ? best.reps : `${bw ? '+' : ''}${num(best.weightKg, lang)}`}
           <span style={{ fontSize: 22, color: 'var(--text)' }}> {useReps ? t.reps.toUpperCase() : `${unit} × ${best.reps}`}</span>

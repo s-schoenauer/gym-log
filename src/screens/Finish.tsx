@@ -1,7 +1,7 @@
 import type { Data } from '../repo';
 import { setWorkoutNote } from '../repo';
 import { workoutSummary, beats } from '../calc';
-import { useT, exName, num, setText, shortDate } from '../i18n';
+import { useT, exName, num, setText, shortDate, ctxLabel } from '../i18n';
 import { useState } from 'react';
 
 export function Finish({ d, workoutId }: { d: Data; workoutId: string }) {
@@ -40,9 +40,10 @@ export function Finish({ d, workoutId }: { d: Data; workoutId: string }) {
       </div>
 
       {prs.map((r) => (
-        <div key={r.exercise.id} className="prcard mt16">
+        <div key={r.exercise.id + r.ctx} className="prcard mt16">
           <div className="h">{t.newRecord}</div>
           <div className="v">{exName(r.exercise, lang)} {setText(r.best, r.exercise.loadType, lang).replace('×', ' × ')}</div>
+          {r.ctx && <div className="small" style={{ fontWeight: 600 }}>{ctxLabel(r.ctx, d.ex, lang)}</div>}
           {r.prevBest && <div className="small" style={{ fontWeight: 600 }}>{t.before} {setText(r.prevBest, r.exercise.loadType, lang)}{r.exercise.loadType === 'perHand' ? ` · ${t.perHand.toLowerCase()}` : ''}</div>}
         </div>
       ))}
@@ -54,7 +55,7 @@ export function Finish({ d, workoutId }: { d: Data; workoutId: string }) {
             {s.results.map((r) => {
               const df = diff(r);
               return (
-                <div key={r.exercise.id} className="between" style={{ minHeight: 48 }}>
+                <div key={r.exercise.id + r.ctx} className="between" style={{ minHeight: 48 }}>
                   <span className="cond" style={{ fontSize: 22, fontWeight: 700, textTransform: 'uppercase' }}>{exName(r.exercise, lang)}</span>
                   <span className="cond" style={{ fontSize: 20, fontWeight: 700, color: df.col, flex: 'none' }}>{df.text}</span>
                 </div>

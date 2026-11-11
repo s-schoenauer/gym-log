@@ -31,6 +31,8 @@ const de = {
   pickExercise: 'Übung wählen', inMine: 'In „Meine“', freeHint: 'Kein Plan. Einfach machen, was sich gut anfühlt.',
   addFromLib: '+ Übung aus Bibliothek', recent: 'Zuletzt gemacht', saveAsPlan: 'Als Plan speichern', savedAsPlan: '✓ Als Plan gespeichert',
   noExercises: 'Noch keine Übung. Füg eine hinzu.', nothingFound: 'Nichts gefunden.', added2: 'hinzugefügt',
+  ctxWith: (names: string) => `mit ${names}`, ctxSolo: 'einzeln', ctxAll: 'Alle', ctxNever: (c: string) => `${c} noch nie gemacht – vorausgefüllt mit:`,
+  ctxHint: 'Fortschritt wird je Supersatz-Partner getrennt geführt, weil die Vorermüdung unterschiedlich ist.',
   trains: 'Trainiert', muscleDetail: 'Muskeln im Detail', periods: { week: 'Diese Woche', '7d': '7 Tage', month: 'Monat', '30d': '30 Tage' } as Record<string, string>, perWeek: 'pro Woche', whereFrom: 'Woher die Sätze kommen', direct: 'direkt', indirect: 'unterstützend',
   countingNote: 'Ein Satz zählt 1 für direkt trainierte Muskeln und 0,5 für unterstützende.', countingSource: 'Zählweise nach Pelland et al. 2024',
   countingFull: 'Alle Sätze zählen voll; grau = Muskel hat nur unterstützt.',
@@ -78,6 +80,8 @@ const en: Dict = {
   pickExercise: 'Pick exercise', inMine: 'In “Mine”', freeHint: 'No plan. Just do what feels right.',
   addFromLib: '+ Exercise from library', recent: 'Recently done', saveAsPlan: 'Save as plan', savedAsPlan: '✓ Saved as plan',
   noExercises: 'No exercise yet. Add one.', nothingFound: 'Nothing found.', added2: 'added',
+  ctxWith: (names: string) => `with ${names}`, ctxSolo: 'on its own', ctxAll: 'All', ctxNever: (c: string) => `Never done ${c} yet – prefilled from:`,
+  ctxHint: 'Progress is tracked per superset partner, because pre-fatigue differs.',
   trains: 'Trains', muscleDetail: 'Muscles in detail', periods: { week: 'This week', '7d': '7 days', month: 'Month', '30d': '30 days' }, perWeek: 'per week', whereFrom: 'Where the sets come from', direct: 'direct', indirect: 'indirect',
   countingNote: 'A set counts 1 for directly trained muscles and 0.5 for assisting ones.', countingSource: 'Counting after Pelland et al. 2024',
   countingFull: 'All sets count fully; grey = the muscle only assisted.',
@@ -113,6 +117,10 @@ export const num = (n: number, lang: Lang) => {
 /** "26×8", "+0×12" for bodyweight exercises */
 export const setText = (s: { weightKg: number; reps: number }, loadType: LoadType, lang: Lang) =>
   `${loadType === 'bodyweightPlus' ? '+' : ''}${num(s.weightKg, lang)}×${s.reps}`;
+
+/** "mit Schulterdrücken KH" / "einzeln" for a context key (partner exercise ids). */
+export const ctxLabel = (ctx: string, ex: Map<string, Exercise>, lang: Lang) =>
+  ctx ? dicts[lang].ctxWith(ctx.split(',').map((id) => exName(ex.get(id), lang)).join(' + ')) : dicts[lang].ctxSolo;
 
 export const shortDate = (ts: number, lang: Lang) => {
   const d = new Date(ts);

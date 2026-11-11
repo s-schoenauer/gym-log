@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import type { WorkoutExercise, WorkoutSet, Exercise } from '../db';
 import {
   type Data, activeWorkout, exercisesOf, setsOf, lastPerformance, updateSet, toggleSet, addSet, addRound, removeSet,
-  setExerciseNote, setSkipped, moveToEnd, swapExercise, finishWorkout, discardWorkout, addExerciseToWorkout, stations, toggleLink
+  setExerciseNote, setSkipped, contextOfWe, moveToEnd, swapExercise, finishWorkout, discardWorkout, addExerciseToWorkout, stations, toggleLink
 } from '../repo';
-import { useT, exName, num, setText, shortDate } from '../i18n';
+import { useT, exName, num, setText, shortDate, ctxLabel } from '../i18n';
 import { go } from '../App';
 import { Icon, Sheet, ask } from '../ui';
 
@@ -143,14 +143,17 @@ export function WorkoutScreen({ d }: { d: Data }) {
 /** Last time, notes and load hints for one exercise. */
 function ExerciseInfo({ d, we, ex }: { d: Data; we: WorkoutExercise; ex: Exercise }) {
   const { t, lang } = useT();
-  const last = lastPerformance(d, ex.id, we.workoutId);
+  const ctx = contextOfWe(d, we);
+  const last = lastPerformance(d, ex.id, we.workoutId, ctx);
   const bw = ex.loadType === 'bodyweightPlus';
+  const where = last && (ctx || last.ctx) ? ` ${ctxLabel(last.ctx, d.ex, lang)}` : '';
   const hint = [ex.loadType === 'perHand' ? t.hintPerHand : bw ? t.hintBw : '', ex.gymNote].filter(Boolean).join(' · ');
   return (
     <div className="stack" style={{ gap: 2 }}>
+      {last && !last.sameCtx && <span className="small accent">{t.ctxNever(ctxLabel(ctx, d.ex, lang))}</span>}
       {last ? (
         <span className="muted" style={{ fontSize: 14 }}>
-          {t.lastTime} ({shortDate(last.workout.startedAt, lang)}): <b style={{ color: 'var(--text)', fontWeight: 600 }}>{last.sets.map((s) => setText(s, ex.loadType, lang)).join(' · ')}</b>
+          {t.lastTime}{where} ({shortDate(last.workout.startedAt, lang)}): <b style={{ color: 'var(--text)', fontWeight: 600 }}>{last.sets.map((s) => setText(s, ex.loadType, lang)).join(' · ')}</b>
         </span>
       ) : <span className="muted" style={{ fontSize: 14 }}>{t.firstTime}</span>}
       {last?.we.note && <span className="muted small" style={{ fontStyle: 'italic' }}>„{last.we.note}“</span>}
