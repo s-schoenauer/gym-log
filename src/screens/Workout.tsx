@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { WorkoutExercise, WorkoutSet, Exercise } from '../db';
 import {
-  type Data, activeWorkout, exercisesOf, setsOf, lastPerformance, updateSet, toggleSet, addSet, addRound, removeSet,
+  type Data, activeWorkout, exercisesOf, setsOf, lastPerformance, updateSet, stepSet, toggleSet, addSet, addRound, removeSet,
   setExerciseNote, setSkipped, contextOfWe, moveToEnd, swapExercise, finishWorkout, discardWorkout, addExerciseToWorkout, stations, toggleLink
 } from '../repo';
 import { useT, exName, num, setText, shortDate, ctxLabel } from '../i18n';
@@ -38,7 +38,6 @@ export function WorkoutScreen({ d }: { d: Data }) {
   const st = stations(wes);
   const [curKey, setCurKey] = useState<string | null>(null);
   const [activeSet, setActiveSet] = useState<string | null>(null);
-  const [nonce, setNonce] = useState(0);
   const [noteOpen, setNoteOpen] = useState(false);
   const [swapFor, setSwapFor] = useState<string | null>(null);
 
@@ -106,8 +105,8 @@ export function WorkoutScreen({ d }: { d: Data }) {
       )}
 
       {cur ? (
-        <StationView key={cur[0].id} d={d} station={cur} flow={flow} active={active} nonce={nonce}
-          onActive={(id) => setActiveSet(id)} onToggle={toggle} onBump={() => setNonce((n) => n + 1)}
+        <StationView key={cur[0].id} d={d} station={cur} flow={flow} active={active}
+          onActive={(id) => setActiveSet(id)} onToggle={toggle}
           noteOpen={noteOpen} onNote={() => setNoteOpen((x) => !x)} onSwap={(id) => setSwapFor(id)} />
       ) : (
         <div className="stack gap12 mt16">
@@ -166,8 +165,8 @@ function ExerciseInfo({ d, we, ex }: { d: Data; we: WorkoutExercise; ex: Exercis
 }
 
 function StationView(p: {
-  d: Data; station: WorkoutExercise[]; flow: ReturnType<typeof flowOf>; active?: WorkoutSet; nonce: number;
-  onActive: (id: string) => void; onToggle: (s: WorkoutSet) => void; onBump: () => void;
+  d: Data; station: WorkoutExercise[]; flow: ReturnType<typeof flowOf>; active?: WorkoutSet;
+  onActive: (id: string) => void; onToggle: (s: WorkoutSet) => void;
   noteOpen: boolean; onNote: () => void; onSwap: (weId: string) => void;
 }) {
   const { t, lang } = useT();
@@ -175,14 +174,8 @@ function StationView(p: {
   const isSuper = station.length > 1;
   const anyNote = station.some((we) => we.note);
 
-  const step = (we: WorkoutExercise, ex: Exercise, s: WorkoutSet, key: 'weightKg' | 'reps', dir: 1 | -1) => {
-    const delta = key === 'reps' ? 1 : ex.weightStep;
-    const v = Math.max(0, Math.round((s[key] + dir * delta) * 100) / 100);
-    updateSet(s.id, { [key]: v });
-    // following open sets of the same exercise with the same old value move along
-    for (const o of setsOf(d, we.id)) if (o.position > s.position && !o.done && o[key] === s[key]) updateSet(o.id, { [key]: v });
-    p.onBump();
-  };
+  const step = (ex: Exercise, s: WorkoutSet, key: 'weightKg' | 'reps', dir: 1 | -1) =>
+    stepSet(s.id, key, dir * (key === 'reps' ? 1 : ex.weightStep));
 
   return (
     <>
@@ -231,9 +224,9 @@ function StationView(p: {
             <div key={f.set.id} style={{ borderBottom: 0 }}>
               {newRound && <div className="round-label">{t.round} {f.round + 1}</div>}
               <SetRow label={isSuper ? `${f.letter}${f.round + 1}` : String(f.round + 1)} compact={isSuper}
-                s={f.set} ex={ex} isActive={p.active?.id === f.set.id} nonce={p.nonce}
+                s={f.set} ex={ex} isActive={p.active?.id === f.set.id}
                 onActive={() => p.onActive(f.set.id)} onToggle={() => p.onToggle(f.set)}
-                onStep={(key, dir) => step(f.we, ex, f.set, key, dir)} />
+                onStep={(key, dir) => step(ex, f.set, key, dir)} />
             </div>
           );
         })}
@@ -252,8 +245,23 @@ function StationView(p: {
   );
 }
 
+/**
+ * Number field that always shows the stored value. Only while you type does it show your own text
+ * (so "12," can be typed); leaving the field shows the stored value again, also after an empty/invalid entry.
+ */
+function NumField({ id, label, display, decimal, onValue }: { id: string; label: string; display: string; decimal?: boolean; onValue: (v: number) => void }) {
+  const [draft, setDraft] = useState<string | null>(null);
+  return (
+    <input id={id} className="numin" inputMode={decimal ? 'decimal' : 'numeric'} aria-label={label}
+      value={draft ?? display}
+      onFocus={(e) => { setDraft(display); e.target.select(); }}
+      onChange={(e) => { setDraft(e.target.value); const v = parseNum(e.target.value); if (v !== null) onValue(v); }}
+      onBlur={() => setDraft(null)} />
+  );
+}
+
 function SetRow(p: {
-  label: string; compact: boolean; s: WorkoutSet; ex: Exercise; isActive: boolean; nonce: number;
+  label: string; compact: boolean; s: WorkoutSet; ex: Exercise; isActive: boolean;
   onActive: () => void; onToggle: () => void; onStep: (key: 'weightKg' | 'reps', dir: 1 | -1) => void;
 }) {
   const { t, lang } = useT();
@@ -274,16 +282,12 @@ function SetRow(p: {
         <div className="steppers">
           <div className="stepper">
             <button aria-label="−" onClick={() => p.onStep('weightKg', -1)}>−</button>
-            <input key={`w${s.id}${p.nonce}`} id={`w-${s.id}`} className="numin" inputMode="decimal" aria-label={loadLabel}
-              defaultValue={num(s.weightKg, lang)} onFocus={(e) => e.target.select()}
-              onChange={(e) => { const v = parseNum(e.target.value); if (v !== null) updateSet(s.id, { weightKg: v }); }} />
+            <NumField id={`w-${s.id}`} label={loadLabel} decimal display={num(s.weightKg, lang)} onValue={(v) => updateSet(s.id, { weightKg: v })} />
             <button aria-label="+" onClick={() => p.onStep('weightKg', 1)}>+</button>
           </div>
           <div className="stepper">
             <button aria-label="−" onClick={() => p.onStep('reps', -1)}>−</button>
-            <input key={`r${s.id}${p.nonce}`} id={`r-${s.id}`} className="numin" inputMode="numeric" aria-label={t.reps}
-              defaultValue={s.reps} onFocus={(e) => e.target.select()}
-              onChange={(e) => { const v = parseNum(e.target.value); if (v !== null) updateSet(s.id, { reps: Math.round(v) }); }} />
+            <NumField id={`r-${s.id}`} label={t.reps} display={String(s.reps)} onValue={(v) => updateSet(s.id, { reps: Math.round(v) })} />
             <button aria-label="+" onClick={() => p.onStep('reps', 1)}>+</button>
           </div>
           <div className="extra">

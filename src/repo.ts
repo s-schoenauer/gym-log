@@ -153,6 +153,27 @@ export async function updateSet(id: string, patch: Partial<Pick<WorkoutSet, 'wei
   await db.sets.update(id, { ...patch, updatedAt: now() });
 }
 
+/**
+ * +/− on a set. Reads the stored value inside the transaction, so fast taps add up exactly
+ * (transactions on the same table run one after another). Following open sets of the same
+ * exercise that still had the old value move along.
+ */
+export async function stepSet(id: string, key: 'weightKg' | 'reps', delta: number) {
+  await db.transaction('rw', db.sets, async () => {
+    const s = await db.sets.get(id);
+    if (!s) return;
+    const old = s[key];
+    const v = Math.max(0, Math.round((old + delta) * 100) / 100);
+    if (v === old) return;
+    const t = now();
+    await db.sets.update(id, { [key]: v, updatedAt: t });
+    const siblings = await db.sets.where('workoutExerciseId').equals(s.workoutExerciseId).toArray();
+    for (const o of siblings) {
+      if (o.deletedAt === null && o.position > s.position && !o.done && o[key] === old) await db.sets.update(o.id, { [key]: v, updatedAt: t });
+    }
+  });
+}
+
 export async function toggleSet(s: WorkoutSet) {
   const done = s.done ? 0 : 1;
   await db.sets.update(s.id, { done, doneAt: done ? now() : null, updatedAt: now() });
