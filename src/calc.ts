@@ -42,6 +42,9 @@ export interface ExerciseResult {
   last: WorkoutSet | null;
   isPr: boolean;
   prevBest: WorkoutSet | null;
+  /** done sets this time and last time in the same context (in order) */
+  sets: WorkoutSet[];
+  lastSets: WorkoutSet[] | null;
   /** superset partners ('' = on its own); records and comparisons are within this context */
   ctx: string;
 }
@@ -62,9 +65,33 @@ export function workoutSummary(d: Data, workoutId: string) {
     const ctx = contextOfWe(d, we);
     const pb = prevBest(d, e.id, w.startedAt, ctx);
     const lp = lastPerformance(d, e.id, workoutId, ctx);
-    results.push({ exercise: e, best, last: lp?.sameCtx ? bestSet(lp.sets) : null, isPr: !!pb && beats(best, pb), prevBest: pb, ctx });
+    results.push({ exercise: e, best, last: lp?.sameCtx ? bestSet(lp.sets) : null, isPr: !!pb && beats(best, pb), prevBest: pb, ctx,
+      sets: ds, lastSets: lp?.sameCtx ? lp.sets : null });
   }
   return { workout: w, minutes: Math.max(1, Math.round((end - w.startedAt) / 60000)), sets, volume: vol, results };
+}
+
+export interface SetChange { kgUp: number; kgDown: number; repsUp: number; repsDown: number; setsDiff: number; perSet: (Pair & { dKg: number; dReps: number } | null)[] }
+
+/**
+ * Set-by-set comparison with last time (same position). For a set with the same weight the reps
+ * difference counts; with a different weight the weight difference counts. Extra or missing sets
+ * are counted separately. So +1 rep in set 3 shows up even if the best set did not change.
+ */
+export function compareSets(cur: Pair[], prev: Pair[]): SetChange {
+  const c: SetChange = { kgUp: 0, kgDown: 0, repsUp: 0, repsDown: 0, setsDiff: cur.length - prev.length, perSet: [] };
+  cur.forEach((s, i) => {
+    const p = prev[i];
+    if (!p) { c.perSet.push(null); return; }
+    const dKg = Math.round((s.weightKg - p.weightKg) * 100) / 100;
+    const dReps = dKg === 0 ? s.reps - p.reps : 0;
+    if (dKg > 0) c.kgUp = Math.max(c.kgUp, dKg);
+    if (dKg < 0) c.kgDown = Math.max(c.kgDown, -dKg);
+    if (dReps > 0) c.repsUp += dReps;
+    if (dReps < 0) c.repsDown += -dReps;
+    c.perSet.push({ weightKg: s.weightKg, reps: s.reps, dKg, dReps });
+  });
+  return c;
 }
 
 export type DayKind = 'none' | 'extra' | 'train' | 'pr';

@@ -1,6 +1,6 @@
 import type { Data } from '../repo';
 import { setWorkoutNote } from '../repo';
-import { workoutSummary, beats } from '../calc';
+import { workoutSummary, compareSets } from '../calc';
 import { useT, exName, num, setText, shortDate, ctxLabel } from '../i18n';
 import { useState } from 'react';
 
@@ -15,17 +15,24 @@ export function Finish({ d, workoutId }: { d: Data; workoutId: string }) {
   const volUnit = s.volume >= 1000 ? 'T' : 'KG';
 
   const diff = (r: (typeof s.results)[number]) => {
-    if (!r.last) return { text: t.newEntry.toUpperCase(), col: 'var(--muted)' };
-    const a = r.best, b = r.last;
-    if (a.weightKg !== b.weightKg) {
-      const dlt = Math.round((a.weightKg - b.weightKg) * 100) / 100;
-      return { text: `${dlt > 0 ? '+' : '−'}${num(Math.abs(dlt), lang)} KG`, col: dlt > 0 ? 'var(--accent)' : '#d4d4d4' };
-    }
-    if (a.reps !== b.reps) {
-      const dlt = a.reps - b.reps;
-      return { text: `${dlt > 0 ? '+' : '−'}${Math.abs(dlt)} ${t.reps.toUpperCase()}`, col: beats(a, b) ? 'var(--accent)' : '#d4d4d4' };
-    }
-    return { text: t.same.toUpperCase(), col: 'var(--muted)' };
+    if (!r.lastSets) return { text: t.newEntry.toUpperCase(), col: 'var(--muted)', detail: '' };
+    const c = compareSets(r.sets, r.lastSets);
+    const R = t.reps.toUpperCase();
+    const parts: string[] = [];
+    if (c.kgUp) parts.push(`+${num(c.kgUp, lang)} KG`);
+    if (c.kgDown) parts.push(`−${num(c.kgDown, lang)} KG`);
+    if (c.repsUp) parts.push(`+${c.repsUp} ${R}`);
+    if (c.repsDown) parts.push(`−${c.repsDown} ${R}`);
+    if (c.setsDiff) parts.push(`${c.setsDiff > 0 ? '+' : '−'}${Math.abs(c.setsDiff)} ${(Math.abs(c.setsDiff) === 1 ? t.set : t.setsShort).toUpperCase()}`);
+    const better = c.kgUp || c.repsUp || c.setsDiff > 0, worse = c.kgDown || c.repsDown || c.setsDiff < 0;
+    // per set: current value, with the change in brackets where something changed
+    const detail = c.perSet.some((p) => !p || p.dKg || p.dReps) ? r.sets.map((x, i) => {
+      const p = c.perSet[i];
+      const d = !p ? ` (${t.newEntry.toLowerCase()})` : p.dKg ? ` (${p.dKg > 0 ? '+' : '−'}${num(Math.abs(p.dKg), lang)} kg)` : p.dReps ? ` (${p.dReps > 0 ? '+' : '−'}${Math.abs(p.dReps)})` : '';
+      return setText(x, r.exercise.loadType, lang) + d;
+    }).join(' · ') : '';
+    if (!parts.length) return { text: t.same.toUpperCase(), col: 'var(--muted)', detail };
+    return { text: parts.join(' · '), col: better && !worse ? 'var(--accent)' : better ? 'var(--text)' : '#d4d4d4', detail };
   };
 
   return (
@@ -55,9 +62,12 @@ export function Finish({ d, workoutId }: { d: Data; workoutId: string }) {
             {s.results.map((r) => {
               const df = diff(r);
               return (
-                <div key={r.exercise.id + r.ctx} className="between" style={{ minHeight: 48 }}>
-                  <span className="cond" style={{ fontSize: 22, fontWeight: 700, textTransform: 'uppercase' }}>{exName(r.exercise, lang)}</span>
-                  <span className="cond" style={{ fontSize: 20, fontWeight: 700, color: df.col, flex: 'none' }}>{df.text}</span>
+                <div key={r.exercise.id + r.ctx} className="stack" style={{ minHeight: 48, justifyContent: 'center', padding: '6px 0', gap: 2 }}>
+                  <div className="between">
+                    <span className="cond" style={{ fontSize: 22, fontWeight: 700, textTransform: 'uppercase' }}>{exName(r.exercise, lang)}</span>
+                    <span className="cond" style={{ fontSize: 20, fontWeight: 700, color: df.col, flex: 'none', textAlign: 'right' }}>{df.text}</span>
+                  </div>
+                  {df.detail && <span className="small muted">{df.detail}</span>}
                 </div>
               );
             })}
