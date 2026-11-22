@@ -187,3 +187,8 @@ details[open] > summary::before { content: '▾ '; }
 .mtags li.full span { color: var(--text); font-weight: 600; }
 .mtags li.full b { color: var(--text); }
 .mtags li.half span, .mtags li.half b { color: var(--muted); }
+.heat a { border-radius: 4px; display: block; }
+.heat a.train { background: var(--text); }
+.heat a.pr { background: var(--accent); }
+.heat a.extra { background: #525252; }
+.heat a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }

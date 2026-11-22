@@ -73,3 +73,21 @@ export function Toaster() {
   }, []);
   return msg ? <div className="toast" role="status">{msg}</div> : null;
 }
+
+export const parseNum = (v: string) => { const n = parseFloat(v.replace(',', '.')); return Number.isFinite(n) && n >= 0 ? n : null; };
+
+/**
+ * Number field that always shows the stored value. Only while you type does it show your own text
+ * (so "12," can be typed); leaving the field shows the stored value again, also after an empty/invalid entry.
+ */
+export function NumField({ id, label, display, decimal, onValue }: { id: string; label: string; display: string; decimal?: boolean; onValue: (v: number) => void }) {
+  const [draft, setDraft] = useState<string | null>(null);
+  return (
+    <input id={id} className="numin" inputMode={decimal ? 'decimal' : 'numeric'} aria-label={label}
+      value={draft ?? display}
+      onFocus={(e) => { setDraft(display); e.target.select(); }}
+      onChange={(e) => { setDraft(e.target.value); const v = parseNum(e.target.value); if (v !== null) onValue(v); }}
+      onBlur={() => setDraft(null)} />
+  );
+}
+

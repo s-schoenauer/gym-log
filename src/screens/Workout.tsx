@@ -6,7 +6,7 @@ import {
 } from '../repo';
 import { useT, exName, num, setText, shortDate, ctxLabel } from '../i18n';
 import { go } from '../App';
-import { Icon, Sheet, ask } from '../ui';
+import { Icon, Sheet, ask, NumField } from '../ui';
 
 function Clock({ since }: { since: number }) {
   const [, tick] = useState(0);
@@ -16,7 +16,6 @@ function Clock({ since }: { since: number }) {
   return <>{h ? `${h}:` : ''}{String(m).padStart(h ? 2 : 1, '0')}:{String(sec).padStart(2, '0')}</>;
 }
 
-const parseNum = (v: string) => { const n = parseFloat(v.replace(',', '.')); return Number.isFinite(n) && n >= 0 ? n : null; };
 const LETTERS = 'ABCDEFGH';
 
 /** Sets of a station in the order they are done: round by round, A then B. */
@@ -242,21 +241,6 @@ function StationView(p: {
           onBlur={(e) => setExerciseNote(we.id, e.target.value.trim())} />
       ))}
     </>
-  );
-}
-
-/**
- * Number field that always shows the stored value. Only while you type does it show your own text
- * (so "12," can be typed); leaving the field shows the stored value again, also after an empty/invalid entry.
- */
-function NumField({ id, label, display, decimal, onValue }: { id: string; label: string; display: string; decimal?: boolean; onValue: (v: number) => void }) {
-  const [draft, setDraft] = useState<string | null>(null);
-  return (
-    <input id={id} className="numin" inputMode={decimal ? 'decimal' : 'numeric'} aria-label={label}
-      value={draft ?? display}
-      onFocus={(e) => { setDraft(display); e.target.select(); }}
-      onChange={(e) => { setDraft(e.target.value); const v = parseNum(e.target.value); if (v !== null) onValue(v); }}
-      onBlur={() => setDraft(null)} />
   );
 }
 

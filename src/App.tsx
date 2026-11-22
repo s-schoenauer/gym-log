@@ -8,6 +8,7 @@ import { Stats } from './screens/Stats';
 import { Plans } from './screens/Plans';
 import { Library } from './screens/Library';
 import { SettingsScreen } from './screens/Settings';
+import { History, Session } from './screens/History';
 import { DialogHost, setDialogLabels } from './ui';
 
 /** Hash routes keep the app working on any static host and from the home screen. */
@@ -46,10 +47,12 @@ export function App() {
     case 'plans': screen = <Plans d={data} open={route.arg} />; break;
     case 'library': screen = <Library d={data} q={route.q} />; break;
     case 'settings': screen = <SettingsScreen d={data} />; break;
+    case 'history': screen = <History d={data} />; break;
+    case 'session': screen = <Session d={data} id={route.arg!} />; break;
     default: screen = <Today d={data} />;
   }
   const hideNav = route.name === 'workout' || route.name === 'finish' || (route.name === 'library' && route.q.get('pick'));
-  const tab = route.name === 'workout' ? 'workout' : route.name === 'library' || route.name === 'settings' ? 'plans' : route.name;
+  const tab = route.name === 'workout' ? 'workout' : route.name === 'library' || route.name === 'settings' ? 'plans' : route.name === 'history' || route.name === 'session' ? 'stats' : route.name;
 
   return (
     <LangCtx.Provider value={lang}>

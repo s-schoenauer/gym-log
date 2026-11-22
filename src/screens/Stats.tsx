@@ -1,4 +1,4 @@
-import type { Data } from '../repo';
+import { type Data, todayKey } from '../repo';
 import { heatmap, exerciseHistory, bestSet } from '../calc';
 import { MuscleDetail } from './MuscleDetail';
 import { useT, exName, num, shortDate, ctxLabel } from '../i18n';
@@ -8,6 +8,8 @@ import { go } from '../App';
 export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
   const { t, lang } = useT();
   const hm = heatmap(d, 12);
+  const byDay = new Map<string, string[]>();
+  for (const w of d.workouts) if (w.finishedAt) { const k = todayKey(new Date(w.startedAt)); byDay.set(k, [...(byDay.get(k) ?? []), w.id]); }
 
   // exercises that have history, most logged first
   const withHist = d.exercises
@@ -19,15 +21,23 @@ export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
 
   return (
     <main className="screen">
-      <h1 className="h1" style={{ fontSize: 64 }}>{t.stats}</h1>
+      <div className="between" style={{ alignItems: 'flex-end' }}>
+        <h1 className="h1" style={{ fontSize: 64 }}>{t.stats}</h1>
+        <a className="btn sm" href="#/history">{t.history}</a>
+      </div>
 
       <section className="stack gap8 mt16" aria-label={t.weeks12}>
         <div className="between">
           <span className="eyebrow">{t.weeks12}</span>
           <span className="cond" style={{ fontSize: 18, fontWeight: 800, textTransform: 'uppercase' }}>{t.trainings(hm.trainings)}</span>
         </div>
-        <div className="heat" role="img" aria-label={t.trainings(hm.trainings)}>
-          {hm.days.map((x) => <span key={x.key} className={x.future ? 'future' : x.kind} title={x.key} />)}
+        <div className="heat" aria-label={t.trainings(hm.trainings)}>
+          {hm.days.map((x) => {
+            const ws = byDay.get(x.key) ?? [];
+            return ws.length
+              ? <a key={x.key} className={x.kind} href={ws.length === 1 ? `#/session/${ws[0]}` : '#/history'} aria-label={`${x.key}: ${t.training}`} />
+              : <span key={x.key} className={x.future ? 'future' : x.kind} />;
+          })}
         </div>
         <div className="legend">
           <span><i style={{ background: '#fff' }} />{t.training}</span>
