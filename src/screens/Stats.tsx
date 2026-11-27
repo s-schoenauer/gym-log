@@ -1,4 +1,5 @@
-import { type Data, todayKey } from '../repo';
+import type { Data } from '../repo';
+import { dayKey } from '../day';
 import { heatmap, exerciseHistory, bestSet } from '../calc';
 import { MuscleDetail } from './MuscleDetail';
 import { useT, exName, num, shortDate, ctxLabel } from '../i18n';
@@ -9,7 +10,7 @@ export function Stats({ d, q }: { d: Data; q: URLSearchParams }) {
   const { t, lang } = useT();
   const hm = heatmap(d, 12);
   const byDay = new Map<string, string[]>();
-  for (const w of d.workouts) if (w.finishedAt) { const k = todayKey(new Date(w.startedAt)); byDay.set(k, [...(byDay.get(k) ?? []), w.id]); }
+  for (const w of d.workouts) if (w.finishedAt) { const k = dayKey(w.startedAt); byDay.set(k, [...(byDay.get(k) ?? []), w.id]); }
 
   // exercises that have history, most logged first
   const withHist = d.exercises

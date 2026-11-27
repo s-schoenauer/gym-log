@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ExtraKind } from '../db';
-import { type Data, activeWorkout, planItemsOf, startWorkout, toggleExtra, todayKey } from '../repo';
+import { type Data, activeWorkout, planItemsOf, startWorkout, toggleExtra } from '../repo';
+import { trainingDate, dayTs, dayKey } from '../day';
 import { heatmap } from '../calc';
 import { useT, shortDate } from '../i18n';
 import { go } from '../App';
@@ -21,15 +22,15 @@ export function Today({ d }: { d: Data }) {
   const defaultPick = [...plans].sort((a, b) => (lastByPlan.get(a.id) ?? 0) - (lastByPlan.get(b.id) ?? 0))[0]?.id ?? 'free';
   const [pick, setPick] = useState<string>(defaultPick);
 
-  const now = new Date();
+  const now = trainingDate();
   const week = heatmap(d, 1).days;
-  const tk = todayKey();
+  const tk = dayKey();
   const todaysExtras = new Set(d.extraLogs.filter((e) => e.date === tk).map((e) => e.kind));
 
   const ago = (ts?: number) => {
     if (!ts) return '';
-    const days = Math.floor((new Date().setHours(0, 0, 0, 0) - new Date(ts).setHours(0, 0, 0, 0)) / 864e5);
-    if (days < 7) return t.lastOn(t.weekdays[new Date(ts).getDay()].slice(0, 2));
+    const days = Math.round((dayTs() - dayTs(ts)) / 864e5);
+    if (days < 7) return t.lastOn(t.weekdays[trainingDate(ts).getDay()].slice(0, 2));
     return t.lastOn(shortDate(ts, lang));
   };
 

@@ -1,5 +1,6 @@
-import type { Exercise, Muscle, WorkoutSet } from './db';
+import type { Exercise, WorkoutSet } from './db';
 import { type Data, exercisesOf, setsOf, lastPerformance, todayKey, contextOfWe } from './repo';
+import { trainingDate, dayTs, dayKey } from './day';
 import { SUB_MUSCLES, GROUP_FALLBACK, type SubMuscle, type Targets } from './muscles';
 import { EVIDENCE } from './evidence';
 
@@ -102,14 +103,13 @@ export function heatmap(d: Data, weeks = 12) {
   for (const e of d.extraLogs) kinds.set(e.date, 'extra');
   for (const w of d.workouts) {
     if (!w.finishedAt) continue;
-    const k = todayKey(new Date(w.startedAt));
+    const k = dayKey(w.startedAt);
     const s = workoutSummary(d, w.id);
     if (!s.sets) continue;
     const kind: DayKind = s.results.some((r) => r.isPr) ? 'pr' : 'train';
     if (kinds.get(k) !== 'pr') kinds.set(k, kind);
   }
-  const today = new Date();
-  today.setHours(12, 0, 0, 0);
+  const today = trainingDate();
   const monday = new Date(today);
   monday.setDate(today.getDate() - ((today.getDay() + 6) % 7) - (weeks - 1) * 7);
   const days: { key: string; kind: DayKind; future: boolean }[] = [];
@@ -120,7 +120,7 @@ export function heatmap(d: Data, weeks = 12) {
     days.push({ key, kind: kinds.get(key) ?? 'none', future: dt > today });
   }
   const from = monday.getTime() - 12 * 3600e3;
-  const trainings = d.workouts.filter((w) => w.finishedAt && w.startedAt >= from).length;
+  const trainings = d.workouts.filter((w) => w.finishedAt && dayTs(w.startedAt) >= from).length;
   return { days, trainings };
 }
 
@@ -136,20 +136,6 @@ export function exerciseHistory(d: Data, exerciseId: string) {
     }
   }
   return out;
-}
-
-export function setsPerMuscleThisWeek(d: Data) {
-  const today = new Date();
-  const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7)).getTime();
-  const counts: Record<Muscle, number> = { chest: 0, back: 0, shoulders: 0, arms: 0, legs: 0, core: 0 };
-  for (const w of d.workouts) {
-    if (w.startedAt < monday) continue;
-    for (const we of exercisesOf(d, w.id)) {
-      const e = d.ex.get(we.exerciseId);
-      if (e && !we.skipped) counts[e.muscle] += doneSets(d, we.id).length;
-    }
-  }
-  return counts;
 }
 
 /** Muscle mapping used for stats: own override → chosen study variant → default variant → coarse group fallback. */
@@ -175,7 +161,7 @@ export type Period = 'week' | '7d' | 'month' | '30d';
 export const PERIODS: Period[] = ['week', '7d', 'month', '30d'];
 
 /** Start of a period: calendar week (Mon) / month (1st) or rolling 7 / 30 days including today. */
-export function periodStart(p: Period, now = new Date()) {
+export function periodStart(p: Period, now: Date = trainingDate()) {
   const day = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   if (p === 'week') return mondayOf(now);
   if (p === 'month') return new Date(now.getFullYear(), now.getMonth(), 1).getTime();
@@ -184,7 +170,7 @@ export function periodStart(p: Period, now = new Date()) {
 }
 
 /** Days covered so far (for a per-week average). */
-export const periodDays = (p: Period, now = new Date()) =>
+export const periodDays = (p: Period, now: Date = trainingDate()) =>
   Math.max(1, Math.round((new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() - periodStart(p, now)) / 864e5) + 1);
 
 /**
@@ -196,7 +182,7 @@ export function subMuscleSets(d: Data, p: Period) {
   const out = Object.fromEntries(SUB_MUSCLES.map((m) => [m, { sets: 0, parts: [] } as SubStat])) as Record<SubMuscle, SubStat>;
   const counts = new Map<string, number>();
   for (const w of d.workouts) {
-    if (w.startedAt < from) continue;
+    if (dayTs(w.startedAt) < from) continue;
     for (const we of exercisesOf(d, w.id)) {
       if (we.skipped) continue;
       const n = doneSets(d, we.id).length;
@@ -216,8 +202,3 @@ export function subMuscleSets(d: Data, p: Period) {
   return out;
 }
 
-export function trainingsThisWeek(d: Data) {
-  const today = new Date();
-  const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - ((today.getDay() + 6) % 7)).getTime();
-  return d.workouts.filter((w) => w.finishedAt && w.startedAt >= monday).length;
-}

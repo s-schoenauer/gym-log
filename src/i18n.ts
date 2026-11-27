@@ -1,3 +1,4 @@
+import { trainingDate } from './day';
 import { createContext, useContext } from 'react';
 import type { Exercise, Muscle, Equipment, ExtraKind, LoadType } from './db';
 
@@ -129,6 +130,6 @@ export const ctxLabel = (ctx: string, ex: Map<string, Exercise>, lang: Lang) =>
   ctx ? dicts[lang].ctxWith(ctx.split(',').map((id) => exName(ex.get(id), lang)).join(' + ')) : dicts[lang].ctxSolo;
 
 export const shortDate = (ts: number, lang: Lang) => {
-  const d = new Date(ts);
+  const d = trainingDate(ts);
   return `${d.getDate()}. ${dicts[lang].months[d.getMonth()]}`;
 };

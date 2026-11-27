@@ -1,5 +1,6 @@
 import Dexie, { type Table, type Transaction } from 'dexie';
 import { USER_VARIANTS } from './evidence';
+import { DAY_START_HOUR, dateKey, dayKey } from './day';
 
 /** Fields every record carries, so a server sync can be added later without migrating data. */
 export interface Base {
@@ -153,6 +154,13 @@ class GymDB extends Dexie {
     });
     // v3: study-based muscle mapping per exercise
     this.version(3).stores({}).upgrade(addMuscleFields);
+    // v4: a training day runs 06:00–06:00 – extras ticked between midnight and 6 am move to the day before
+    this.version(4).stores({}).upgrade(async (tx) => {
+      await tx.table('extraLogs').toCollection().modify((e: ExtraLog) => {
+        const created = new Date(e.createdAt);
+        if (created.getHours() < DAY_START_HOUR && e.date === dateKey(created)) { e.date = dayKey(e.createdAt); e.updatedAt = Date.now(); }
+      });
+    });
   }
 }
 

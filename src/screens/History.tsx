@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { type Data, exercisesOf, setsOf, stations, contextOfWe, updateSet, removeSet, toggleSet, discardWorkout, setWorkoutNote, todayKey } from '../repo';
+import { type Data, exercisesOf, setsOf, stations, contextOfWe, updateSet, removeSet, toggleSet, discardWorkout, setWorkoutNote } from '../repo';
+import { trainingDate, dayKey } from '../day';
 import { workoutSummary } from '../calc';
 import { useT, exName, num } from '../i18n';
 import { go } from '../App';
@@ -8,7 +9,7 @@ import { ask, NumField } from '../ui';
 const LETTERS = 'ABCDEFGH';
 
 const fmtDay = (ts: number, t: ReturnType<typeof useT>['t']) => {
-  const d = new Date(ts);
+  const d = trainingDate(ts);
   return `${t.weekdays[d.getDay()].slice(0, 2)} ${d.getDate()}. ${t.months[d.getMonth()]}`;
 };
 const fmtTime = (ts: number) => { const d = new Date(ts); return `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
@@ -19,7 +20,7 @@ export function History({ d }: { d: Data }) {
   const done = d.workouts.filter((w) => w.finishedAt).sort((a, b) => b.startedAt - a.startedAt);
   const months: { label: string; items: typeof done }[] = [];
   for (const w of done) {
-    const dt = new Date(w.startedAt);
+    const dt = trainingDate(w.startedAt);
     const label = `${t.months[dt.getMonth()]} ${dt.getFullYear()}`;
     if (months[months.length - 1]?.label !== label) months.push({ label, items: [] });
     months[months.length - 1].items.push(w);
@@ -66,7 +67,7 @@ export function Session({ d, id }: { d: Data; id: string }) {
   const sum = workoutSummary(d, w.id);
   const prIds = new Set(sum.results.filter((r) => r.isPr).map((r) => r.exercise.id + r.ctx));
   const st = stations(exercisesOf(d, w.id));
-  const extras = d.extraLogs.filter((e) => e.date === todayKey(new Date(w.startedAt)));
+  const extras = d.extraLogs.filter((e) => e.date === dayKey(w.startedAt));
   const vol = sum.volume >= 1000 ? `${num(Math.round(sum.volume / 100) / 10, lang)}T` : `${num(Math.round(sum.volume), lang)}`;
 
   const del = async () => {

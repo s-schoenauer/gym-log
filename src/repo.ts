@@ -1,4 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks';
+import { trainingDate, dateKey, dayKey } from './day';
 import {
   db, base, uuid7, type Exercise, type Plan, type PlanItem, type Workout, type WorkoutExercise,
   type WorkoutSet, type ExtraLog, type ExtraKind, type Settings, type Muscle, type Equipment, type LoadType
@@ -245,12 +246,12 @@ export async function discardWorkout(d: Data, id: string) {
 
 // ---------- extras ----------
 
-export function todayKey(date = new Date()) {
-  const p = (n: number) => String(n).padStart(2, '0');
-  return `${date.getFullYear()}-${p(date.getMonth() + 1)}-${p(date.getDate())}`;
+/** YYYY-MM-DD of a calendar date (defaults to the current training day, see day.ts). */
+export function todayKey(date: Date = trainingDate()) {
+  return dateKey(date);
 }
 
-export async function toggleExtra(d: Data, kind: ExtraKind, date = todayKey()) {
+export async function toggleExtra(d: Data, kind: ExtraKind, date = dayKey()) {
   const hit = d.extraLogs.find((e) => e.date === date && e.kind === kind);
   if (hit) await db.extraLogs.update(hit.id, { deletedAt: now(), updatedAt: now() });
   else await db.extraLogs.add({ ...base(), date, kind });
